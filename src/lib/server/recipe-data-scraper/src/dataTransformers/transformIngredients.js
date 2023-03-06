@@ -1,10 +1,10 @@
-import cleanIngredientAmounts from "../utils/cleanIngredientAmounts";
-import logger from "../utils/logger";
+import cleanIngredientAmounts from '../utils/cleanIngredientAmounts';
+import logger from '../utils/logger';
 
 const transformIngredients = (value) => {
   // jsonld
-  if (value && typeof value[0] === "string") {
-    return value.map((item) => cleanIngredientAmounts(item));
+  if (value && typeof value[0] === 'string') {
+    return value.map(item => cleanIngredientAmounts(item));
   }
 
   // array of objects (microdata)
@@ -26,7 +26,7 @@ const transformIngredients = (value) => {
     return mappedItems;
   }
 
-  logger("transformIngredients:microdata:item without properties", value);
+  logger('transformIngredients:microdata:item without properties', value);
   return [];
 };
 

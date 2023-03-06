@@ -1,7 +1,7 @@
-import logger from "../utils/logger";
-import { parse } from "iso8601-duration";
-import transformToString from "./transformToString";
-import transformISOToString from "../utils/transformIsoToString";
+import logger from '../utils/logger';
+import { parse } from 'iso8601-duration';
+import transformToString from './transformToString';
+import transformISOToString from '../utils/transformIsoToString';
 
 function transformToTime(value, key) {
   const time = transformToString(value);

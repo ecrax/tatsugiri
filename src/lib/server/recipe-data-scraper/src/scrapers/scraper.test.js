@@ -1,49 +1,49 @@
-import proxyquire from "proxyquire";
+import proxyquire from 'proxyquire';
 import { should } from "chai";
-import sinon from "sinon";
+import sinon from 'sinon';
 should();
 
-describe("Scraper class", () => {
+describe('Scraper class', () => {
   let myClass;
   const chtmlStub = sinon.stub();
   const loggerStub = sinon.stub();
 
   const testStub = sinon.stub();
-  testStub.returns("hello");
+  testStub.returns('hello');
   const buildRecipeModelStub = sinon.stub();
 
   before(() => {
-    myClass = proxyquire.noCallThru().load("./Scraper", {
-      "../dataTransformers/buildRecipeModel": buildRecipeModelStub,
-      "../utils/logger": loggerStub,
+    myClass = proxyquire.noCallThru().load('./Scraper', {
+      '../dataTransformers/buildRecipeModel': buildRecipeModelStub,
+      '../utils/logger': loggerStub,
     }).default;
   });
 
-  describe("constructor with a valid class", () => {
+  describe('constructor with a valid class', () => {
     let scraper;
 
     before(async () => {
       class mockClass extends myClass {
-        testForMetadata() {}
-        findRecipeItem() {}
+        testForMetadata() { }
+        findRecipeItem() { }
       }
 
       scraper = new mockClass(chtmlStub);
     });
 
-    it("should set the initial values", () => {
+    it('should set the initial values', () => {
       scraper.chtml.should.eql(chtmlStub);
       (scraper.meta === null).should.be.true;
       (scraper.recipeItem === null).should.be.true;
     });
   });
 
-  describe("constructor for a class missing testForMetadata", () => {
-    let error = "";
+  describe('constructor for a class missing testForMetadata', () => {
+    let error = '';
 
     before(async () => {
       class mockClass extends myClass {
-        findRecipeItem() {}
+        findRecipeItem() { }
       }
 
       try {
@@ -53,17 +53,17 @@ describe("Scraper class", () => {
       }
     });
 
-    it("should throw an error", () => {
-      error.should.eql({ message: "testForMetadata function must be implemented by child class" });
+    it('should throw an error', () => {
+      error.should.eql({ message: 'testForMetadata function must be implemented by child class' });
     });
   });
 
-  describe("constructor for a class missing findRecipeItem", () => {
-    let error = "";
+  describe('constructor for a class missing findRecipeItem', () => {
+    let error = '';
 
     before(async () => {
       class mockClass extends myClass {
-        testForMetadata() {}
+        testForMetadata() { }
       }
 
       try {
@@ -73,23 +73,23 @@ describe("Scraper class", () => {
       }
     });
 
-    it("should throw an error", () => {
-      error.should.eql({ message: "findRecipeItem function must be implemented by child class" });
+    it('should throw an error', () => {
+      error.should.eql({ message: 'findRecipeItem function must be implemented by child class' });
     });
   });
 
-  describe("getRecipe", () => {
+  describe('getRecipe', () => {
     let scraper;
 
     before(async () => {
       class mockClass extends myClass {
         testForMetadata() {
-          this.meta = "something";
+          this.meta = 'something';
         }
 
         findRecipeItem() {
           this.recipeItem = {
-            hi: "food n stuff",
+            hi: 'food n stuff',
           };
         }
       }
@@ -98,20 +98,20 @@ describe("Scraper class", () => {
       scraper.getRecipe();
     });
 
-    it("testForMetadata should set the meta", () => {
-      scraper.meta.should.eql("something");
+    it('testForMetadata should set the meta', () => {
+      scraper.meta.should.eql('something');
     });
 
-    it("findRecipeItem should set the recipeItem", () => {
-      scraper.recipeItem.should.eql({ hi: "food n stuff" });
+    it('findRecipeItem should set the recipeItem', () => {
+      scraper.recipeItem.should.eql({ hi: 'food n stuff' });
     });
 
-    it("buildRecipeModel should be invoked", () => {
+    it('buildRecipeModel should be invoked', () => {
       sinon.assert.calledOnce(buildRecipeModelStub);
     });
   });
 
-  describe("getRecipe where no meta has been set", () => {
+  describe('getRecipe where no meta has been set', () => {
     let scraper;
     let error;
 
@@ -120,7 +120,7 @@ describe("Scraper class", () => {
       class mockClass extends myClass {
         constructor(chtml) {
           super(chtml);
-          this.type = "tester";
+          this.type = 'tester';
         }
 
         testForMetadata() {
@@ -129,7 +129,7 @@ describe("Scraper class", () => {
 
         findRecipeItem() {
           this.recipeItem = {
-            hi: "food n stuff",
+            hi: 'food n stuff',
           };
         }
       }
@@ -143,27 +143,27 @@ describe("Scraper class", () => {
       }
     });
 
-    it("no meta error should be thrown", () => {
+    it('no meta error should be thrown', () => {
       error.should.eql({
-        message: "no meta data was found",
-        type: "tester",
+        message: 'no meta data was found',
+        type: 'tester',
       });
     });
 
-    it("meta should not be set", () => {
+    it('meta should not be set', () => {
       (scraper.meta === null).should.be.true;
     });
 
-    it("recipeItem should not be set", () => {
+    it('recipeItem should not be set', () => {
       (scraper.recipeItem === null).should.be.true;
     });
 
-    it("buildRecipeModel should not be called", () => {
+    it('buildRecipeModel should not be called', () => {
       sinon.assert.notCalled(buildRecipeModelStub);
     });
   });
 
-  describe("getRecipe where no recipeItem has been set", () => {
+  describe('getRecipe where no recipeItem has been set', () => {
     let scraper;
     let error;
 
@@ -171,11 +171,11 @@ describe("Scraper class", () => {
       class mockClass extends myClass {
         constructor(chtml) {
           super(chtml);
-          this.type = "tester-2";
+          this.type = 'tester-2';
         }
 
         testForMetadata() {
-          this.meta = "something-meta";
+          this.meta = 'something-meta';
         }
 
         findRecipeItem() {}
@@ -190,54 +190,55 @@ describe("Scraper class", () => {
       }
     });
 
-    it("no meta error should be thrown", () => {
+    it('no meta error should be thrown', () => {
       error.should.eql({
-        message: "found metadata, but no recipe information",
-        type: "tester-2",
+        message: 'found metadata, but no recipe information',
+        type: 'tester-2',
       });
     });
 
-    it("meta should be set", () => {
-      scraper.meta.should.eql("something-meta");
+    it('meta should be set', () => {
+      scraper.meta.should.eql('something-meta');
     });
 
-    it("recipeItem should not be set", () => {
+    it('recipeItem should not be set', () => {
       (scraper.recipeItem === null).should.be.true;
     });
 
-    it("no recipeItem error should be thrown", () => {
+    it('no recipeItem error should be thrown', () => {
       error.should.eql({
-        message: "found metadata, but no recipe information",
-        type: "tester-2",
+        message: 'found metadata, but no recipe information',
+        type: 'tester-2',
       });
     });
 
-    it("buildRecipeModel should not be called", () => {
+    it('buildRecipeModel should not be called', () => {
       sinon.assert.notCalled(buildRecipeModelStub);
     });
   });
 
-  describe("getRecipe when buildRecipeModel throws an exception", () => {
+
+  describe('getRecipe when buildRecipeModel throws an exception', () => {
     let scraper;
     let error;
 
     before(async () => {
       buildRecipeModelStub.reset();
-      buildRecipeModelStub.throws("anything");
+      buildRecipeModelStub.throws('anything');
 
       class mockClass extends myClass {
         constructor(chtml) {
           super(chtml);
-          this.type = "tester-3";
+          this.type = 'tester-3';
         }
 
         testForMetadata() {
-          this.meta = "something-meta-3";
+          this.meta = 'something-meta-3';
         }
 
         findRecipeItem() {
           this.recipeItem = {
-            chocolate: "ice cream",
+            chocolate: 'ice cream',
           };
         }
       }
@@ -251,29 +252,30 @@ describe("Scraper class", () => {
       }
     });
 
-    it("meta should be set", () => {
-      scraper.meta.should.eql("something-meta-3");
+    it('meta should be set', () => {
+      scraper.meta.should.eql('something-meta-3');
     });
 
-    it("recipeItem should be set", () => {
+    it('recipeItem should be set', () => {
       scraper.recipeItem.should.eql({
-        chocolate: "ice cream",
+        chocolate: 'ice cream',
       });
     });
 
-    it("buildRecipeModel should be called", () => {
+    it('buildRecipeModel should be called', () => {
       sinon.assert.calledOnceWithExactly(buildRecipeModelStub, scraper.recipeItem);
     });
 
-    it("recipe mapping error should be thrown", () => {
+    it('recipe mapping error should be thrown', () => {
       error.should.eql({
-        message: "found recipe information, there was a problem with mapping the data",
-        type: "tester-3",
+        message: 'found recipe information, there was a problem with mapping the data',
+        type: 'tester-3',
       });
     });
+
   });
 
-  describe("print()", () => {
+  describe('print()', () => {
     let scraper;
 
     before(async () => {
@@ -284,25 +286,25 @@ describe("Scraper class", () => {
 
       scraper = new mockClass(chtmlStub);
       scraper.recipeItem = {
-        name: "eat my food",
-        forget: "me,",
+        name: 'eat my food',
+        forget: 'me,'
       };
       scraper.finalRecipe = {
-        name: "eat my food my-name",
+        name: 'eat my food my-name',
       };
       scraper.print();
     });
 
-    it("loggerStub should be invoked with the recipeItem if set", () => {
+    it('loggerStub should be invoked with the recipeItem if set', () => {
       sinon.assert.calledWith(loggerStub, scraper.recipeItem);
     });
 
-    it("loggerStub should be invoked with the finalRecipe if set", () => {
+    it('loggerStub should be invoked with the finalRecipe if set', () => {
       sinon.assert.calledWith(loggerStub, scraper.finalRecipe);
     });
   });
 
-  describe("print() when nothing is set", () => {
+  describe('print() when nothing is set', () => {
     let scraper;
 
     before(async () => {
@@ -318,7 +320,7 @@ describe("Scraper class", () => {
       scraper.print();
     });
 
-    it("loggerStub should not be invoked ", () => {
+    it('loggerStub should not be invoked ', () => {
       sinon.assert.notCalled(loggerStub);
     });
   });

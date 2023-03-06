@@ -1,5 +1,5 @@
-import buildRecipeModel from "../dataTransformers/buildRecipeModel";
-import logger from "../utils/logger";
+import buildRecipeModel from '../dataTransformers/buildRecipeModel';
+import logger from '../utils/logger';
 
 /*
   class to be extended by scraper classes
@@ -19,13 +19,13 @@ class Scraper {
 
     if (!this.testForMetadata) {
       throw {
-        message: "testForMetadata function must be implemented by child class",
+        message: 'testForMetadata function must be implemented by child class',
       };
     }
 
     if (!this.findRecipeItem) {
       throw {
-        message: "findRecipeItem function must be implemented by child class",
+        message: 'findRecipeItem function must be implemented by child class',
       };
     }
   }
@@ -35,7 +35,7 @@ class Scraper {
 
     if (!this.meta) {
       throw {
-        message: "no meta data was found",
+        message: 'no meta data was found',
         type: this.type,
       };
     }
@@ -43,7 +43,7 @@ class Scraper {
     this.findRecipeItem();
     if (!this.recipeItem) {
       throw {
-        message: "found metadata, but no recipe information",
+        message: 'found metadata, but no recipe information',
         type: this.type,
       };
     }
@@ -54,7 +54,7 @@ class Scraper {
       return this.finalRecipe;
     } catch (error) {
       throw {
-        message: "found recipe information, there was a problem with mapping the data",
+        message: 'found recipe information, there was a problem with mapping the data',
         type: this.type,
       };
     }
@@ -62,18 +62,18 @@ class Scraper {
 
   print() {
     if (this.recipeItem) {
-      logger(" - - - - - - - - - - - - ");
-      logger("original recipe data");
+      logger(' - - - - - - - - - - - - ');
+      logger('original recipe data');
       logger(`type: ${this.type}`);
       logger(this.recipeItem);
-      logger(" - - - - - - - - - - - - ");
+      logger(' - - - - - - - - - - - - ');
     }
 
     if (this.finalRecipe) {
-      logger(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ");
-      logger("transformed recipe data");
+      logger(' ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ');
+      logger('transformed recipe data');
       logger(this.finalRecipe);
-      logger(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ");
+      logger(' ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ');
     }
   }
 }

@@ -1,13 +1,13 @@
-import logger from "../utils/logger";
+import logger from '../utils/logger';
 
 function transformToString(value, key) {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return value;
   }
   if (Array.isArray(value)) {
     return value[0];
   }
-  logger("another format needed", key);
+  logger('another format needed', key);
   return value;
 }
 

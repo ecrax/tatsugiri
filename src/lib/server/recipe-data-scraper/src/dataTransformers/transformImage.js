@@ -1,7 +1,7 @@
-import logger from "../utils/logger";
+import logger from '../utils/logger';
 
 function transformImage(value) {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return value;
   }
 
@@ -13,7 +13,7 @@ function transformImage(value) {
     return value[0];
   }
 
-  logger("image in another format", value);
+  logger('image in another format', value);
   return value;
 }
 

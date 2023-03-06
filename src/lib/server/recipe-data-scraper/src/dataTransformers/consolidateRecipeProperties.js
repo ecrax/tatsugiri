@@ -1,4 +1,4 @@
-import logger from "../utils/logger";
+import logger from '../utils/logger';
 
 export const consolidateRecipeProperties = (prospectiveProperties) => {
   const {
@@ -29,7 +29,7 @@ export const consolidateRecipeProperties = (prospectiveProperties) => {
 
   if (step) {
     // didn't find any recipes that use step
-    logger("buildRecipeModel:may need extra parsing for step property");
+    logger('buildRecipeModel:may need extra parsing for step property');
   }
 
   // consolidate the properties into new model

@@ -1,5 +1,5 @@
-import consolidateRecipeProperties from "./consolidateRecipeProperties";
-import propertyTransformerMap from "./propertyTransformerMap";
+import consolidateRecipeProperties from './consolidateRecipeProperties';
+import propertyTransformerMap from './propertyTransformerMap';
 
 const buildRecipeModel = (prospectiveProperties) => {
   const recipe = consolidateRecipeProperties(prospectiveProperties);

@@ -1,9 +1,9 @@
-import proxyquire from "proxyquire";
+import proxyquire from 'proxyquire';
 import { should } from "chai";
-import sinon from "sinon";
+import sinon from 'sinon';
 should();
 
-describe("main(url)", () => {
+describe('main(url)', () => {
   let recipeDataScraper;
   const loggerStub = sinon.stub();
   const axiosStub = sinon.stub();
@@ -19,31 +19,31 @@ describe("main(url)", () => {
     constructor(chtml) {
       this.chtml = chtml;
     }
-    getRecipe = getRecipeMicrodataStub;
-    print = printMicrodataStub;
+    getRecipe = getRecipeMicrodataStub
+    print = printMicrodataStub
   }
 
   class JsonLdScraperClass {
     constructor(chtml) {
       this.chtml = chtml;
     }
-    getRecipe = getRecipeJsonLdStub;
-    print = printJsonLdStub;
+    getRecipe = getRecipeJsonLdStub
+    print = printJsonLdStub
   }
 
   before(() => {
-    recipeDataScraper = proxyquire.noCallThru().load("./main", {
-      axios: axiosStub,
-      cheerio: cheerioStub,
-      "./scrapers/JsonLdScraper": JsonLdScraperClass,
-      "./scrapers/MicrodataScraper": MicrodataScraperClass,
-      "./utils/logger": loggerStub,
+    recipeDataScraper = proxyquire.noCallThru().load('./main', {
+      'axios': axiosStub,
+      'cheerio': cheerioStub,
+      './scrapers/JsonLdScraper': JsonLdScraperClass,
+      './scrapers/MicrodataScraper': MicrodataScraperClass,
+      './utils/logger': loggerStub,
     }).default;
   });
 
-  describe("test expected behavior when the axios call fails", () => {
+  describe('test expected behavior when the axios call fails', () => {
     let errorMessage;
-    const testUrl = "https://someurl.test3";
+    const testUrl = 'https://someurl.test3';
 
     before(async () => {
       axiosStub.withArgs(testUrl).throws();
@@ -56,31 +56,31 @@ describe("main(url)", () => {
       }
     });
 
-    it("axios was invoked with the url", () => {
+    it('axios was invoked with the url', () => {
       sinon.assert.calledWith(axiosStub, testUrl);
     });
 
-    it("cheerio.load will not be invoked", () => {
+    it('cheerio.load will not be invoked', () => {
       sinon.assert.notCalled(cheerioStub.load);
     });
 
-    it("getRecipe for the JsonLd instance will not be invoked", () => {
+    it('getRecipe for the JsonLd instance will not be invoked', () => {
       sinon.assert.notCalled(getRecipeJsonLdStub);
     });
 
-    it("getRecipe for the microdata instance will not be invoked", () => {
+    it('getRecipe for the microdata instance will not be invoked', () => {
       sinon.assert.notCalled(getRecipeMicrodataStub);
     });
 
-    it("error should be caught with correct message", () => {
-      errorMessage.should.eql("Could not find recipe data");
+    it('error should be caught with correct message', () => {
+      errorMessage.should.eql('Could not find recipe data');
     });
   });
 
-  describe("test expected behavior when cheerio.load fails", () => {
+  describe('test expected behavior when cheerio.load fails', () => {
     let errorMessage;
-    const testUrl = "https://someurl.test3";
-    const mockAxiosResp = { data: "<some html />" };
+    const testUrl = 'https://someurl.test3';
+    const mockAxiosResp = { data: '<some html />' };
 
     before(async () => {
       axiosStub.reset();
@@ -95,33 +95,33 @@ describe("main(url)", () => {
       }
     });
 
-    it("axios was invoked with the url", () => {
+    it('axios was invoked with the url', () => {
       sinon.assert.calledWith(axiosStub, testUrl);
     });
 
-    it("cheerio.load was invoked with the response", () => {
+    it('cheerio.load was invoked with the response', () => {
       sinon.assert.calledWith(cheerioStub.load, mockAxiosResp.data);
     });
 
-    it("getRecipe for the JsonLd instance will not be invoked", () => {
+    it('getRecipe for the JsonLd instance will not be invoked', () => {
       sinon.assert.notCalled(getRecipeJsonLdStub);
     });
 
-    it("getRecipe for the microdata instance will not be invoked", () => {
+    it('getRecipe for the microdata instance will not be invoked', () => {
       sinon.assert.notCalled(getRecipeMicrodataStub);
     });
 
-    it("error should be caught with correct message", () => {
-      errorMessage.should.eql("Could not find recipe data");
+    it('error should be caught with correct message', () => {
+      errorMessage.should.eql('Could not find recipe data');
     });
   });
 
-  describe("test expected behavior when json-ld is returned", () => {
+  describe('test expected behavior when json-ld is returned', () => {
     let result;
-    const testUrl = "https://someurl.test";
-    const mockAxiosResp = { data: "<some html />" };
-    const mockChtmlResp = { some: "response" };
-    const mockRecipeJsonLd = { has: "json-ld" };
+    const testUrl = 'https://someurl.test';
+    const mockAxiosResp = { data: '<some html />' };
+    const mockChtmlResp = { some: 'response' };
+    const mockRecipeJsonLd = { has: 'json-ld' };
 
     before(async () => {
       axiosStub.withArgs(testUrl).returns(mockAxiosResp);
@@ -130,41 +130,41 @@ describe("main(url)", () => {
       result = await recipeDataScraper(testUrl);
     });
 
-    it("axios was invoked with the url", () => {
+    it('axios was invoked with the url', () => {
       sinon.assert.calledWith(axiosStub, testUrl);
     });
 
-    it("cheerio.load was invoked with the response", () => {
+    it('cheerio.load was invoked with the response', () => {
       sinon.assert.calledWith(cheerioStub.load, mockAxiosResp.data);
     });
 
-    it("getRecipe should be invoked on the JsonLd instance", () => {
+    it('getRecipe should be invoked on the JsonLd instance', () => {
       sinon.assert.calledWith(getRecipeJsonLdStub);
     });
 
-    it("getRecipe should NOT be invoked with the microdata", () => {
+    it('getRecipe should NOT be invoked with the microdata', () => {
       sinon.assert.neverCalledWithMatch(getRecipeMicrodataStub);
     });
 
-    it("print should not be invoked", () => {
+    it('print should not be invoked', () => {
       sinon.assert.neverCalledWithMatch(printJsonLdStub);
     });
 
-    it("logger should not be invoked", () => {
+    it('logger should not be invoked', () => {
       sinon.assert.neverCalledWithMatch(loggerStub);
     });
 
-    it("result should equal json-ld response", () => {
+    it('result should equal json-ld response', () => {
       result.should.eql({ ...mockRecipeJsonLd, url: testUrl });
     });
   });
 
-  describe("test expected behavior when json-ld is returned and print is enabled", () => {
+  describe('test expected behavior when json-ld is returned and print is enabled', () => {
     let result;
-    const testUrl = "https://someurl.test";
-    const mockAxiosResp = { data: "<some html />" };
-    const mockChtmlResp = { some: "response" };
-    const mockRecipeJsonLd = { has: "json-ld" };
+    const testUrl = 'https://someurl.test';
+    const mockAxiosResp = { data: '<some html />' };
+    const mockChtmlResp = { some: 'response' };
+    const mockRecipeJsonLd = { has: 'json-ld' };
 
     before(async () => {
       printJsonLdStub.reset();
@@ -174,83 +174,83 @@ describe("main(url)", () => {
       result = await recipeDataScraper(testUrl, { printToConsole: true });
     });
 
-    it("axios was invoked with the url", () => {
+    it('axios was invoked with the url', () => {
       sinon.assert.calledWith(axiosStub, testUrl);
     });
 
-    it("cheerio.load was invoked with the response", () => {
+    it('cheerio.load was invoked with the response', () => {
       sinon.assert.calledWith(cheerioStub.load, mockAxiosResp.data);
     });
 
-    it("getRecipe should be invoked on the JsonLd instance", () => {
+    it('getRecipe should be invoked on the JsonLd instance', () => {
       sinon.assert.calledWith(getRecipeJsonLdStub);
     });
 
-    it("getRecipe should NOT be invoked with the microdata", () => {
+    it('getRecipe should NOT be invoked with the microdata', () => {
       sinon.assert.neverCalledWithMatch(getRecipeMicrodataStub);
     });
 
-    it("print should be invoked", () => {
+    it('print should be invoked', () => {
       sinon.assert.calledOnce(printJsonLdStub);
     });
 
-    it("logger should not be invoked", () => {
+    it('logger should not be invoked', () => {
       sinon.assert.neverCalledWithMatch(loggerStub);
     });
 
-    it("result should equal json-ld response", () => {
+    it('result should equal json-ld response', () => {
       result.should.eql({ ...mockRecipeJsonLd, url: testUrl });
     });
   });
 
-  describe("test expected behavior when microdata is returned", () => {
+  describe('test expected behavior when microdata is returned', () => {
     let result;
-    const testUrl = "https://someurl.test2";
-    const mockAxiosResp = { data: "<some html />" };
-    const mockChtmlResp = { some: "response" };
-    const mockRecipeMicrodata = { has: "microdata" };
+    const testUrl = 'https://someurl.test2';
+    const mockAxiosResp = { data: '<some html />' };
+    const mockChtmlResp = { some: 'response' };
+    const mockRecipeMicrodata = { has: 'microdata' };
 
     before(async () => {
       loggerStub.reset();
       axiosStub.withArgs(testUrl).returns(mockAxiosResp);
       cheerioStub.load.returns(mockChtmlResp);
       getRecipeJsonLdStub.reset();
-      getRecipeJsonLdStub.throws({ message: "well well" });
+      getRecipeJsonLdStub.throws({ message: 'well well'});
       getRecipeMicrodataStub.withArgs().returns(mockRecipeMicrodata);
       result = await recipeDataScraper(testUrl);
     });
 
-    it("axios was invoked with the url", () => {
+    it('axios was invoked with the url', () => {
       sinon.assert.calledWith(axiosStub, testUrl);
     });
 
-    it("cheerio.load was invoked with the response", () => {
+    it('cheerio.load was invoked with the response', () => {
       sinon.assert.calledWith(cheerioStub.load, mockAxiosResp.data);
     });
 
-    it("logger should be invoked with json ld error", () => {
-      sinon.assert.calledWith(loggerStub, "main:JsonLdScraper");
+    it('logger should be invoked with json ld error', () => {
+      sinon.assert.calledWith(loggerStub, 'main:JsonLdScraper');
     });
 
-    it("getRecipe was invoked with the class, etc", () => {
+    it('getRecipe was invoked with the class, etc', () => {
       sinon.assert.calledWith(getRecipeMicrodataStub);
     });
 
-    it("print should not be invoked", () => {
+    it('print should not be invoked', () => {
       sinon.assert.neverCalledWithMatch(printMicrodataStub);
     });
 
-    it("result should equal microdata response and the url", () => {
+    it('result should equal microdata response and the url', () => {
       result.should.eql({ ...mockRecipeMicrodata, url: testUrl });
     });
   });
 
-  describe("test expected behavior when microdata is returned and print is enabled", () => {
+  describe('test expected behavior when microdata is returned and print is enabled', () => {
     let result;
-    const testUrl = "https://someurl.test2";
-    const mockAxiosResp = { data: "<some html />" };
-    const mockChtmlResp = { some: "response" };
-    const mockRecipeMicrodata = { has: "microdata" };
+    const testUrl = 'https://someurl.test2';
+    const mockAxiosResp = { data: '<some html />' };
+    const mockChtmlResp = { some: 'response' };
+    const mockRecipeMicrodata = { has: 'microdata' };
 
     before(async () => {
       printMicrodataStub.reset();
@@ -258,50 +258,50 @@ describe("main(url)", () => {
       axiosStub.withArgs(testUrl).returns(mockAxiosResp);
       cheerioStub.load.returns(mockChtmlResp);
       getRecipeJsonLdStub.reset();
-      getRecipeJsonLdStub.throws({ message: "well well" });
+      getRecipeJsonLdStub.throws({ message: 'well well' });
       getRecipeMicrodataStub.withArgs().returns(mockRecipeMicrodata);
       result = await recipeDataScraper(testUrl, { printToConsole: true });
     });
 
-    it("axios was invoked with the url", () => {
+    it('axios was invoked with the url', () => {
       sinon.assert.calledWith(axiosStub, testUrl);
     });
 
-    it("cheerio.load was invoked with the response", () => {
+    it('cheerio.load was invoked with the response', () => {
       sinon.assert.calledWith(cheerioStub.load, mockAxiosResp.data);
     });
 
-    it("logger should be invoked with json ld error", () => {
-      sinon.assert.calledWith(loggerStub, "main:JsonLdScraper");
+    it('logger should be invoked with json ld error', () => {
+      sinon.assert.calledWith(loggerStub, 'main:JsonLdScraper');
     });
 
-    it("getRecipe was invoked with the class, etc", () => {
+    it('getRecipe was invoked with the class, etc', () => {
       sinon.assert.calledWith(getRecipeMicrodataStub);
     });
 
-    it("print should be invoked", () => {
+    it('print should be invoked', () => {
       sinon.assert.calledOnce(printMicrodataStub);
     });
 
-    it("result should equal microdata response and the url", () => {
+    it('result should equal microdata response and the url', () => {
       result.should.eql({ ...mockRecipeMicrodata, url: testUrl });
     });
   });
 
-  describe("test expected behavior when no recipe data is found", () => {
+  describe('test expected behavior when no recipe data is found', () => {
     let errorMessage;
-    const testUrl = "https://someurl.test2";
-    const mockAxiosResp = { data: "<some html />" };
-    const mockChtmlResp = { some: "response" };
+    const testUrl = 'https://someurl.test2';
+    const mockAxiosResp = { data: '<some html />' };
+    const mockChtmlResp = { some: 'response' };
 
     before(async () => {
       loggerStub.reset();
       axiosStub.withArgs(testUrl).returns(mockAxiosResp);
       cheerioStub.load.returns(mockChtmlResp);
       getRecipeJsonLdStub.reset();
-      getRecipeJsonLdStub.throws({ message: "well well" });
+      getRecipeJsonLdStub.throws({ message: 'well well' });
       getRecipeMicrodataStub.reset();
-      getRecipeMicrodataStub.throws({ message: "no recipe here" });
+      getRecipeMicrodataStub.throws({ message: 'no recipe here' });
 
       try {
         await recipeDataScraper(testUrl);
@@ -310,42 +310,36 @@ describe("main(url)", () => {
       }
     });
 
-    it("axios was invoked with the url", () => {
+    it('axios was invoked with the url', () => {
       sinon.assert.calledWith(axiosStub, testUrl);
     });
 
-    it("cheerio.load was invoked with the response", () => {
+    it('cheerio.load was invoked with the response', () => {
       sinon.assert.calledWith(cheerioStub.load, mockAxiosResp.data);
     });
 
-    it("getRecipe was invoked on the JsonLdScraper class", () => {
+    it('getRecipe was invoked on the JsonLdScraper class', () => {
       sinon.assert.calledWith(getRecipeJsonLdStub);
     });
 
-    it("getRecipe was invoked on the MicrodataScraper class", () => {
+    it('getRecipe was invoked on the MicrodataScraper class', () => {
       sinon.assert.calledWith(getRecipeMicrodataStub);
     });
 
-    it("logger should be invoked with json ld error", () => {
+    it('logger should be invoked with json ld error', () => {
       sinon.assert.callCount(loggerStub, 2);
     });
 
-    it("logger should be invoked with jsonLd error", () => {
-      sinon.assert.calledWith(loggerStub.getCall(0), "main:JsonLdScraper", {
-        message: "well well",
-        url: "https://someurl.test2",
-      });
+    it('logger should be invoked with jsonLd error', () => {
+      sinon.assert.calledWith(loggerStub.getCall(0), 'main:JsonLdScraper', { message: "well well", url: "https://someurl.test2" });
     });
 
-    it("logger should be invoked with microdata error", () => {
-      sinon.assert.calledWith(loggerStub.getCall(1), "main:MicrodataScraper", {
-        message: "no recipe here",
-        url: "https://someurl.test2",
-      });
+    it('logger should be invoked with microdata error', () => {
+      sinon.assert.calledWith(loggerStub.getCall(1), 'main:MicrodataScraper', { message: "no recipe here", url: "https://someurl.test2" });
     });
 
-    it("error should be caught with correct message", () => {
-      errorMessage.should.eql("Could not find recipe data");
+    it('error should be caught with correct message', () => {
+      errorMessage.should.eql('Could not find recipe data');
     });
   });
 });

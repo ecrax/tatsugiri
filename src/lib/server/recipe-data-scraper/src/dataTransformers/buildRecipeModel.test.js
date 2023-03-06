@@ -1,28 +1,28 @@
-import proxyquire from "proxyquire";
+import proxyquire from 'proxyquire';
 import { should } from "chai";
-import sinon from "sinon";
+import sinon from 'sinon';
 should();
 
-describe("buildRecipeModel", () => {
+describe('buildRecipeModel', () => {
   let buildRecipeModel;
 
   const consolidateRecipePropertiesStub = sinon.stub();
 
   consolidateRecipePropertiesStub.returns({
-    url: "test_url",
-    name: "test_name",
-    image: "test_image",
-    description: "test_description", // string
-    cookTime: "test_cookTime", // string
-    prepTime: "test_prepTime", // string
-    totalTime: "test_totalTime", // string
-    recipeYield: "test_recipeYield", // string
-    recipeIngredients: ["ing, red, ient"], // array
-    recipeInstructions: ["step1, step2"], // array
-    recipeCategories: ["cat1, cat2, cat3, cat4"], // array
-    recipeCuisines: ["italian"], // array
-    recipeTypes: ["dinner"], // array
-    keywords: ["easy", "banana"], // array
+    url: 'test_url',
+    name: 'test_name',
+    image: 'test_image',
+    description: 'test_description', // string
+    cookTime: 'test_cookTime', // string
+    prepTime: 'test_prepTime', // string
+    totalTime: 'test_totalTime', // string
+    recipeYield: 'test_recipeYield',// string
+    recipeIngredients: ['ing, red, ient'], // array
+    recipeInstructions: ['step1, step2'], // array
+    recipeCategories: ['cat1, cat2, cat3, cat4'], // array
+    recipeCuisines: ['italian'], // array
+    recipeTypes: ['dinner'], // array
+    keywords: ['easy', 'banana'], // array
   });
 
   const propertyTransformerMapStub = {
@@ -33,18 +33,18 @@ describe("buildRecipeModel", () => {
   };
 
   before(() => {
-    buildRecipeModel = proxyquire.noCallThru().load("./buildRecipeModel", {
-      "./consolidateRecipeProperties": consolidateRecipePropertiesStub,
-      "./propertyTransformerMap": propertyTransformerMapStub,
+    buildRecipeModel = proxyquire.noCallThru().load('./buildRecipeModel', {
+      './consolidateRecipeProperties': consolidateRecipePropertiesStub,
+      './propertyTransformerMap': propertyTransformerMapStub,
     }).default;
   });
 
-  describe("each property should invoke its transformer if it exists", () => {
+  describe('each property should invoke its transformer if it exists', () => {
     const prospectiveProperties = {
-      url: "test_url",
-      name: "test_name",
-      image: "test_image",
-      description: "test_description",
+      url: 'test_url',
+      name: 'test_name',
+      image: 'test_image',
+      description: 'test_description',
       nope: undefined,
     };
 
@@ -52,23 +52,19 @@ describe("buildRecipeModel", () => {
       buildRecipeModel(prospectiveProperties);
     });
 
-    it("name", () => {
-      sinon.assert.calledOnceWithExactly(propertyTransformerMapStub.name, "test_name", "name");
+    it('name', () => {
+      sinon.assert.calledOnceWithExactly(propertyTransformerMapStub.name, 'test_name', 'name');
     });
 
-    it("image", () => {
-      sinon.assert.calledOnceWithExactly(propertyTransformerMapStub.image, "test_image", "image");
+    it('image', () => {
+      sinon.assert.calledOnceWithExactly(propertyTransformerMapStub.image, 'test_image', 'image');
     });
 
-    it("description", () => {
-      sinon.assert.calledOnceWithExactly(
-        propertyTransformerMapStub.description,
-        "test_description",
-        "description"
-      );
+    it('description', () => {
+      sinon.assert.calledOnceWithExactly(propertyTransformerMapStub.description, 'test_description', 'description');
     });
 
-    it("property without a value", () => {
+    it('property without a value', () => {
       sinon.assert.notCalled(propertyTransformerMapStub.nope);
     });
   });

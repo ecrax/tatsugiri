@@ -1,5 +1,5 @@
 export default function transformISOToString(dateObj = {}) {
-  let date = "";
+  let date = '';
 
   if (dateObj.days) {
     date += dateObj.days > 1 ? `${dateObj.days} days ` : `${dateObj.days} day `;

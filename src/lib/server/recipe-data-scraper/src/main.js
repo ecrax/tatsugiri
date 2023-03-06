@@ -1,20 +1,22 @@
-import { load } from "cheerio";
-import fetch from "node-fetch";
-import MicrodataScraper from "./scrapers/MicrodataScraper";
-import JsonLdScraper from "./scrapers/JsonLdScraper";
-import logger from "./utils/logger";
+import axios from 'axios';
+import cheerio from 'cheerio';
+import MicrodataScraper from './scrapers/MicrodataScraper';
+import JsonLdScraper from './scrapers/JsonLdScraper';
+import logger from './utils/logger';
 
-const errorMessage = "Could not find recipe data";
+const errorMessage = 'Could not find recipe data';
 
 export default async (url, options = {}) => {
-  const { printToConsole } = options;
+  const {
+    printToConsole,
+  } = options;
 
   let chtml;
 
   try {
     // load html from scraped url
-    const resp = await fetch(url);
-    chtml = load(await resp.text());
+    const resp = await axios(url);
+    chtml = cheerio.load(resp.data);
   } catch (error) {
     throw new Error(errorMessage);
   }
@@ -33,7 +35,7 @@ export default async (url, options = {}) => {
       url,
     };
   } catch (error) {
-    logger("main:JsonLdScraper", {
+    logger('main:JsonLdScraper', {
       ...error,
       url,
     });
@@ -53,7 +55,7 @@ export default async (url, options = {}) => {
       url,
     };
   } catch (error) {
-    logger("main:MicrodataScraper", {
+    logger('main:MicrodataScraper', {
       ...error,
       url,
     });
