@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { Icons } from "@/components/icons";
+import { api } from "@/utils/api";
 
 const Header = () => {
   const { data: sessionData } = useSession();
@@ -69,7 +70,7 @@ const Header = () => {
 };
 
 const Home: NextPage = () => {
-  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const { data: sessionData } = useSession();
 
   return (
@@ -122,11 +123,11 @@ const Home: NextPage = () => {
               </div>
             </Link>
           </div>
-          {/* <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2">
             <p className="text-2xl">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
-          </div> */}
+          </div>
         </div>
       </main>
     </>
