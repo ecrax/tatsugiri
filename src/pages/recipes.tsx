@@ -11,7 +11,7 @@ import { useState } from "react";
 const Recipes: NextPage = () => {
   const [url, setUrl] = useState<string>("");
   const router = useRouter();
-  const { mutate } = api.recipe.scrape.useMutation({
+  const { mutate, error } = api.recipe.scrape.useMutation({
     onSuccess(data) {
       void router.push(`/recipe/${data.name ?? ""}`);
     },
@@ -40,6 +40,7 @@ const Recipes: NextPage = () => {
               <Plus className="mr-2 h-4 w-4" /> Scrape
             </Button>
           </div>
+          {error && <p>{error.message}</p>}
         </article>
       </div>
     </main>

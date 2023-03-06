@@ -23,9 +23,11 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
 
   return (
     <aside>
-      <h1 className="flex items-center px-8 py-6 text-2xl font-semibold">
-        <Soup className="mr-2" /> Tatsugiri
-      </h1>
+      <Link href={"/recipes"}>
+        <h1 className="flex items-center px-8 py-6 text-2xl font-semibold">
+          <Soup className="mr-2" /> Tatsugiri
+        </h1>
+      </Link>
       <div className="space-y-4 px-8">
         <Input
           placeholder="Search..."

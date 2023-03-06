@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import recipeDataScraper from "@/lib/server/recipe-data-scraper";
+import recipeDataScraper from "recipe-scraper";
 import { TRPCError } from "@trpc/server";
 import { type Recipe } from "@prisma/client";
 
