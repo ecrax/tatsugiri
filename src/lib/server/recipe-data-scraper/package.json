@@ -1,0 +1,26 @@
+{
+  "name": "recipe-data-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "module": "dist/main.js",
+  "type": "module",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "rollup --config"
+  },
+  "keywords": [],
+  "author": "ecrax",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "1.0.0-rc.12",
+    "iso8601-duration": "^2.1.1",
+    "microdata-node": "^2.0.0",
+    "node-fetch": "^3.3.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "rollup": "^3.15.0"
+  }
+}

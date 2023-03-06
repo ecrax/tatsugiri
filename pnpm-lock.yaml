@@ -33,6 +33,7 @@ specifiers:
   prisma: ^4.9.0
   react: 18.2.0
   react-dom: 18.2.0
+  recipe-data-scraper: link:src/lib/server/recipe-data-scraper
   superjson: 1.9.1
   tailwind-merge: ^1.10.0
   tailwindcss: ^3.2.0
@@ -58,6 +59,7 @@ dependencies:
   next-auth: 4.20.1_nvzgbose6yf6w7ijjprgspqefi
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  recipe-data-scraper: link:src/lib/server/recipe-data-scraper
   superjson: 1.9.1
   tailwind-merge: 1.10.0
   tailwindcss-animate: 1.0.5_tailwindcss@3.2.7

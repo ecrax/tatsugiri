@@ -7,12 +7,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-import { Settings, User } from "lucide-react";
+import { Plus, Settings, User } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { type ReactNode } from "react";
 
 const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const { data: sessionData } = useSession();
+  const router = useRouter();
   return (
     <header className="flex items-center justify-between">
       <div>{children}</div>
@@ -33,6 +35,15 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
                 <User className="mr-2 h-4 w-4" /> Profile
               </div>
               <span className="">⌘+L</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => void router.push("/recipes")}
+              className="flex items-center justify-between"
+            >
+              <div className="flex items-center">
+                <Plus className="mr-2 h-4 w-4" /> Scrape
+              </div>
+              <span className="">⌘+N</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex items-center justify-between">
               <div className="flex items-center">
