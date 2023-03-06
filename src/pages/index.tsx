@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { api } from "@/utils/api";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { Icons } from "@/components/icons";
 
@@ -70,7 +69,8 @@ const Header = () => {
 };
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const { data: sessionData } = useSession();
 
   return (
     <>
@@ -87,17 +87,29 @@ const Home: NextPage = () => {
             Create <span className="text-emerald-500">T3</span> App
           </h1>
           <div className="grid grid-cols-1 gap-4 text-slate-700 dark:text-slate-400 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl border border-slate-200 bg-white/10 p-4 hover:bg-white/20 hover:bg-slate-100 dark:border-slate-700"
-              href=""
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
+            {sessionData ? (
+              <Link
+                className="flex max-w-xs flex-col gap-4 rounded-xl border border-slate-200 bg-white/10 p-4 hover:bg-white/20 hover:bg-slate-100 dark:border-slate-700"
+                href="/recipes"
+              >
+                <h3 className="text-2xl font-bold">Head to Library →</h3>
+                <div className="text-lg">
+                  Just the basics - Everything you need to know to set up your
+                  database and authentication.
+                </div>
+              </Link>
+            ) : (
+              <button
+                className="flex max-w-xs flex-col gap-4 rounded-xl border border-slate-200 bg-white/10 p-4 hover:bg-white/20 hover:bg-slate-100 dark:border-slate-700"
+                onClick={() => void signIn("discord")}
+              >
+                <h3 className="text-2xl font-bold">Get Started →</h3>
+                <div className="text-lg">
+                  Just the basics - Everything you need to know to set up your
+                  database and authentication.
+                </div>
+              </button>
+            )}
             <Link
               className="flex max-w-xs flex-col gap-4 rounded-xl border border-slate-200 bg-white/10 p-4 hover:bg-white/20 hover:bg-slate-100 dark:border-slate-700"
               href=""
@@ -110,11 +122,11 @@ const Home: NextPage = () => {
               </div>
             </Link>
           </div>
-          <div className="flex flex-col items-center gap-2">
+          {/* <div className="flex flex-col items-center gap-2">
             <p className="text-2xl">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
-          </div>
+          </div> */}
         </div>
       </main>
     </>
@@ -122,4 +134,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
