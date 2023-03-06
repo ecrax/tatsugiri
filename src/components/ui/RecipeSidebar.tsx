@@ -1,7 +1,6 @@
 import { Input } from "@/components/ui/Input";
 import { Separator } from "@/components/ui/Seperator";
 import { api } from "@/utils/api";
-import { type Recipe } from "@prisma/client";
 import { clsx } from "clsx";
 import { ClipboardList, Soup, Timer } from "lucide-react";
 import Link from "next/link";
@@ -41,7 +40,7 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
             {allRecipes.length == 0 && <p>Wow such empty</p>}
             {recipes.length == 0 && <p>No recipes found</p>}
             {recipes.length > 0 &&
-              recipes.map((r, _) => (
+              recipes.map((r) => (
                 //? Better/more useful info on hover
                 <HoverCard key={r.name}>
                   <HoverCardTrigger>
