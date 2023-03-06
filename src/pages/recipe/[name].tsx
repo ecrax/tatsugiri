@@ -18,10 +18,10 @@ const RecipePage: NextPage = () => {
   const { data } = api.recipe.getByName.useQuery({ name });
 
   return (
-    <main className="grid min-h-screen grid-cols-4 xl:grid-cols-6">
+    <main className="grid min-h-screen grid-cols-4 2xl:grid-cols-6">
       <RecipeSidebar selectedRecipe={name} />
 
-      <div className="col-span-3 border-l border-l-slate-200 px-8 py-6 xl:col-span-5">
+      <div className="col-span-3 border-l border-l-slate-200 px-8 py-6 2xl:col-span-5">
         <Header>
           <div className="flex gap-4">
             <Button>Edit</Button>
@@ -29,14 +29,13 @@ const RecipePage: NextPage = () => {
             <Button>Delete</Button>
           </div>
         </Header>
-        {data && data.name}
         <article className="grid grid-cols-3 pt-6">
           <div className="">
             <div>Image</div>
             <div>Instructions</div>
           </div>
           <div className="col-span-2">
-            <h1>{name}</h1>
+            <h1>{data && name}</h1>
             <div>Ingredients</div>
           </div>
         </article>

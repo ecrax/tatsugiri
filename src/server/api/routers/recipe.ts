@@ -23,6 +23,12 @@ export const recipeRouter = createTRPCRouter({
   getRecipesForSidebar: protectedProcedure.query(({ ctx }) => {
     // TODO: pagination/lazy loading
     return ctx.prisma.recipe.findMany({
+      select: {
+        name: true,
+        image: true,
+        recipeInstructions: true,
+        totalTime: true,
+      },
       where: {
         owner: {
           email: ctx.session.user.email,

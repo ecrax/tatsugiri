@@ -3,9 +3,10 @@ import { Separator } from "@/components/ui/Seperator";
 import { api } from "@/utils/api";
 import { type Recipe } from "@prisma/client";
 import { clsx } from "clsx";
-import { Soup } from "lucide-react";
+import { ClipboardList, Soup, Timer } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
 
 const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
   selectedRecipe,
@@ -14,7 +15,7 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
 
   const [search, setSearch] = useState<string>();
 
-  let recipes: Recipe[] = [];
+  let recipes: typeof allRecipes = [];
   if (allRecipes) {
     recipes = allRecipes.filter((r) =>
       r.name?.toLowerCase().includes(search ?? "")
@@ -40,18 +41,41 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
             {allRecipes.length == 0 && <p>Wow such empty</p>}
             {recipes.length == 0 && <p>No recipes found</p>}
             {recipes.length > 0 &&
-              recipes.map((r, i) => (
-                // TODO: show preview image on hover
-                <Link
-                  key={i}
-                  className={clsx(
-                    "group flex w-full items-center rounded-md py-2 px-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800",
-                    r.name === selectedRecipe && "bg-slate-200"
-                  )}
-                  href={`/recipe/${r.name ?? ""}`}
-                >
-                  {r.name}
-                </Link>
+              recipes.map((r, _) => (
+                //? Better/more useful info on hover
+                <HoverCard key={r.name}>
+                  <HoverCardTrigger>
+                    <Link
+                      className={clsx(
+                        "group flex w-full items-center rounded-md py-2 px-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800",
+                        r.name === selectedRecipe && "bg-slate-200"
+                      )}
+                      href={`/recipe/${r.name ?? ""}`}
+                    >
+                      {r.name}
+                    </Link>
+                  </HoverCardTrigger>
+                  <HoverCardContent side="right">
+                    <div className="flex items-center justify-between ">
+                      <div className="mr-4 flex w-full flex-col gap-3">
+                        <p className="flex flex-col items-center text-xs">
+                          <Timer />
+                          {r.totalTime}
+                        </p>
+                        <Separator />
+                        <p className="flex flex-col items-center text-xs">
+                          <ClipboardList />
+                          {r.recipeInstructions.length}
+                        </p>
+                      </div>
+                      <img
+                        src={r.image ?? ""}
+                        alt={r.name ?? ""}
+                        className="h-32 w-32 rounded-md object-cover"
+                      />
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
               ))}
           </div>
         )}
