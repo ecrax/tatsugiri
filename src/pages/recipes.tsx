@@ -1,12 +1,13 @@
+import { useState } from "react";
+import { type NextPage } from "next";
+import { useRouter } from "next/router";
+import { Plus } from "lucide-react";
+
+import { api } from "@/utils/api";
 import { Button } from "@/components/ui/Button";
 import Header from "@/components/ui/Header";
 import { Input } from "@/components/ui/Input";
 import RecipeSidebar from "@/components/ui/RecipeSidebar";
-import { api } from "@/utils/api";
-import { Plus } from "lucide-react";
-import { type NextPage } from "next";
-import { useRouter } from "next/router";
-import { useState } from "react";
 
 const Recipes: NextPage = () => {
   const [url, setUrl] = useState<string>("");

@@ -1,7 +1,7 @@
-import { Duration } from 'iso8601-duration';
+import { Duration } from "iso8601-duration";
 
 export default function transformISOToString(dateObj: Duration) {
-  let date = '';
+  let date = "";
 
   if (dateObj.days) {
     date += dateObj.days > 1 ? `${dateObj.days} days ` : `${dateObj.days} day `;

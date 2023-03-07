@@ -1,10 +1,10 @@
-import transformImage from './transformImage';
-import transformToList from './transformToList';
-import transformToString from './transformToString';
-import transformToTime from './transformToTime';
-import transformToCleanString from './transformToCleanString';
-import transformInstructions from './transformInstructions';
-import transformIngredients from './transformIngredients';
+import transformImage from "./transformImage";
+import transformToList from "./transformToList";
+import transformToString from "./transformToString";
+import transformToTime from "./transformToTime";
+import transformToCleanString from "./transformToCleanString";
+import transformInstructions from "./transformInstructions";
+import transformIngredients from "./transformIngredients";
 
 const propertyTransformerMap = {
   name: transformToString,

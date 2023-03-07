@@ -1,9 +1,8 @@
-import { z } from "zod";
-
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import recipeDataScraper from "recipe-scraper";
-import { TRPCError } from "@trpc/server";
 import { type Recipe } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import recipeDataScraper from "recipe-scraper";
+import { z } from "zod";
 
 export const recipeRouter = createTRPCRouter({
   getByName: protectedProcedure

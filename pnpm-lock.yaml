@@ -29,6 +29,7 @@ specifiers:
   lucide-react: ^0.122.0
   next: ^13.2.1
   next-auth: ^4.19.0
+  parse-ingredient: ^0.6.0
   postcss: ^8.4.14
   prettier: ^2.8.1
   prettier-plugin-tailwindcss: ^0.2.1
@@ -60,6 +61,7 @@ dependencies:
   lucide-react: 0.122.0_react@18.2.0
   next: 13.2.3_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.20.1_nvzgbose6yf6w7ijjprgspqefi
+  parse-ingredient: 0.6.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   recipe-scraper: link:src/lib/server/recipe-scraper
@@ -2832,6 +2834,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /numeric-quantity/1.0.4:
+    resolution: {integrity: sha512-FT7tD29l3vf35bXykhVgW7foq1SxSpm0k34RQort6l6ilFEKAXYrJcnFHBIg59MTs2s9yZXr29hKq23xjGw6pw==}
+    engines: {node: '>=10'}
+    dev: false
+
   /oauth/0.9.15:
     resolution: {integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==}
     dev: false
@@ -2972,6 +2979,13 @@ packages:
     dependencies:
       callsites: 3.1.0
     dev: true
+
+  /parse-ingredient/0.6.0:
+    resolution: {integrity: sha512-I9neV5NCet1LTPzkAvdogeZ8PfUAgm32GHh5v73VM3za5PJvybIOpPYIDYsoP5wR5izFb27/iNYJxQ9Jbav/1Q==}
+    engines: {node: '>=10'}
+    dependencies:
+      numeric-quantity: 1.0.4
+    dev: false
 
   /path-exists/4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}

@@ -1,3 +1,8 @@
+import { type ReactNode } from "react";
+import { useRouter } from "next/router";
+import { LogOut, Plus, Settings, User } from "lucide-react";
+import { useSession } from "next-auth/react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import {
   DropdownMenu,
@@ -7,10 +12,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-import { Plus, Settings, User } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { type ReactNode } from "react";
 
 const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const { data: sessionData } = useSession();
@@ -52,7 +53,10 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
               </div>
               <span>⌘+,</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuItem className="flex items-center">
+              <LogOut className="mr-2 h-4 w-4" />
+              Log out
+            </DropdownMenuItem>
             <DropdownMenuItem>Subscription</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

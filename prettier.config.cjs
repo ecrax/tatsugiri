@@ -1,8 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-/** @type {import("prettier").Config} */
+/** @type {import("@ianvs/prettier-plugin-sort-imports").PrettierConfig} */
 const config = {
-  plugins: [require.resolve("prettier-plugin-tailwindcss")],
+  plugins: [
+    require.resolve("prettier-plugin-tailwindcss"),
+    require("@ianvs/prettier-plugin-sort-imports"),
+  ],
   importOrder: [
     "^(react/(.*)$)|^(react$)",
     "^(next/(.*)$)|^(next$)",
@@ -10,6 +11,7 @@ const config = {
     "",
     "^types$",
     "^@/types/(.*)$",
+    "^@/utils/(.*)$",
     "^@/config/(.*)$",
     "^@/lib/(.*)$",
     "^@/components/(.*)$",

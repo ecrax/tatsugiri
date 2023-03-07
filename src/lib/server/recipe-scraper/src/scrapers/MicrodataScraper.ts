@@ -3,14 +3,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { CheerioAPI } from 'cheerio';
-import microdata from 'microdata-node';
-import Scraper from './Scraper';
+import { CheerioAPI } from "cheerio";
+import microdata from "microdata-node";
+import Scraper from "./Scraper";
 
 class MicrodataScraper extends Scraper {
   constructor(chtml: CheerioAPI) {
     super(chtml);
-    this.type = 'microdata';
+    this.type = "microdata";
   }
 
   testForMetadata() {
@@ -25,7 +25,7 @@ class MicrodataScraper extends Scraper {
 
   findRecipeItem() {
     const recipe = (Object.values(this.meta.items) as any[]).find(
-      (item) => item.type[0].indexOf('Recipe') > -1
+      (item) => item.type[0].indexOf("Recipe") > -1
     );
     this.recipeItem = recipe ? recipe.properties : null;
   }

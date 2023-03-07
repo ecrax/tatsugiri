@@ -1,7 +1,7 @@
-import logger from '../utils/logger';
-import { parse } from 'iso8601-duration';
-import transformToString from './transformToString';
-import transformISOToString from '../utils/transformIsoToString';
+import logger from "../utils/logger";
+import { parse } from "iso8601-duration";
+import transformToString from "./transformToString";
+import transformISOToString from "../utils/transformIsoToString";
 
 function transformToTime(value: string | string[], key?: string) {
   const time = transformToString(value);
@@ -12,7 +12,7 @@ function transformToTime(value: string | string[], key?: string) {
     }
   } catch (error) {
     // fail silently and return original time
-    logger(`ISO date parsing failure for ${key ?? ''}`);
+    logger(`ISO date parsing failure for ${key ?? ""}`);
   }
 
   return time;

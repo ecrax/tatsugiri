@@ -1,4 +1,4 @@
-const isLoggingEnabled = process.env.LOGGING_ENABLED === 'true';
+const isLoggingEnabled = process.env.LOGGING_ENABLED === "true";
 
 const logger = (...args: unknown[]) => {
   if (isLoggingEnabled) {

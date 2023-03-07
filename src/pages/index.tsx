@@ -3,9 +3,9 @@ import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { Button, buttonVariants } from "@/components/ui/Button";
-import { Icons } from "@/components/icons";
 import { api } from "@/utils/api";
+import { Icons } from "@/components/icons";
+import { Button, buttonVariants } from "@/components/ui/Button";
 
 const Header = () => {
   const { data: sessionData } = useSession();

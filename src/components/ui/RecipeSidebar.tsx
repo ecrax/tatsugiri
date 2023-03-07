@@ -1,10 +1,11 @@
-import { Input } from "@/components/ui/Input";
-import { Separator } from "@/components/ui/Seperator";
-import { api } from "@/utils/api";
+import { useState } from "react";
+import Link from "next/link";
 import { clsx } from "clsx";
 import { ClipboardList, Soup, Timer } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+
+import { api } from "@/utils/api";
+import { Input } from "@/components/ui/Input";
+import { Separator } from "@/components/ui/Seperator";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
 
 const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({

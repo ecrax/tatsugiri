@@ -1,9 +1,9 @@
-import logger from '../utils/logger';
+import logger from "../utils/logger";
 
 function transformToList(value: string | string[], key?: string) {
-  if (typeof value === 'string') {
-    if (value.includes(',')) {
-      return value.split(',').map((item) => item.trim());
+  if (typeof value === "string") {
+    if (value.includes(",")) {
+      return value.split(",").map((item) => item.trim());
     }
 
     return [value];
@@ -11,7 +11,7 @@ function transformToList(value: string | string[], key?: string) {
   if (Array.isArray(value)) {
     return value;
   }
-  logger('another format needed', key);
+  logger("another format needed", key);
   return value;
 }
 

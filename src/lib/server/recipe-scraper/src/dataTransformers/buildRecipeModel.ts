@@ -2,8 +2,8 @@
 
 import consolidateRecipeProperties, {
   prospectiveProperties,
-} from './consolidateRecipeProperties';
-import propertyTransformerMap from './propertyTransformerMap';
+} from "./consolidateRecipeProperties";
+import propertyTransformerMap from "./propertyTransformerMap";
 
 export type recipeProperties = keyof typeof propertyTransformerMap;
 

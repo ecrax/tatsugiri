@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { CheerioAPI } from 'cheerio';
+import { CheerioAPI } from "cheerio";
 import buildRecipeModel, {
   recipeProperties,
-} from '../dataTransformers/buildRecipeModel';
-import logger from '../utils/logger';
+} from "../dataTransformers/buildRecipeModel";
+import logger from "../utils/logger";
 
 /*
   class to be extended by scraper classes
@@ -19,7 +19,7 @@ abstract class Scraper {
   chtml: CheerioAPI;
   meta: Record<string, any>;
   recipeItem: any;
-  type: 'jsonld' | 'microdata';
+  type: "jsonld" | "microdata";
   finalRecipe: Record<recipeProperties, string | string[] | undefined>;
 
   public abstract testForMetadata(): any;
@@ -32,13 +32,13 @@ abstract class Scraper {
 
     if (!this.testForMetadata) {
       throw {
-        message: 'testForMetadata function must be implemented by child class',
+        message: "testForMetadata function must be implemented by child class",
       };
     }
 
     if (!this.findRecipeItem) {
       throw {
-        message: 'findRecipeItem function must be implemented by child class',
+        message: "findRecipeItem function must be implemented by child class",
       };
     }
   }
@@ -48,7 +48,7 @@ abstract class Scraper {
 
     if (!this.meta) {
       throw {
-        message: 'no meta data was found',
+        message: "no meta data was found",
         type: this.type,
       };
     }
@@ -56,7 +56,7 @@ abstract class Scraper {
     this.findRecipeItem();
     if (!this.recipeItem) {
       throw {
-        message: 'found metadata, but no recipe information',
+        message: "found metadata, but no recipe information",
         type: this.type,
       };
     }
@@ -68,7 +68,7 @@ abstract class Scraper {
     } catch (error) {
       throw {
         message:
-          'found recipe information, there was a problem with mapping the data',
+          "found recipe information, there was a problem with mapping the data",
         type: this.type,
       };
     }
@@ -76,18 +76,18 @@ abstract class Scraper {
 
   print() {
     if (this.recipeItem) {
-      logger(' - - - - - - - - - - - - ');
-      logger('original recipe data');
+      logger(" - - - - - - - - - - - - ");
+      logger("original recipe data");
       logger(`type: ${this.type}`);
       logger(this.recipeItem);
-      logger(' - - - - - - - - - - - - ');
+      logger(" - - - - - - - - - - - - ");
     }
 
     if (this.finalRecipe) {
-      logger(' ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ');
-      logger('transformed recipe data');
+      logger(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ");
+      logger("transformed recipe data");
       logger(this.finalRecipe);
-      logger(' ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ');
+      logger(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ");
     }
   }
 }

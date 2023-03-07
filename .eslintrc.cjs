@@ -25,6 +25,7 @@ const config = {
         fixStyle: "inline-type-imports",
       },
     ],
+    "@next/next/no-img-element": "off",
   },
 };
 

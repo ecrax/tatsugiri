@@ -2,14 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import cleanIngredientAmounts from '../utils/cleanIngredientAmounts';
-import logger from '../utils/logger';
+import cleanIngredientAmounts from "../utils/cleanIngredientAmounts";
+import logger from "../utils/logger";
 
 const transformIngredients = (value: any[] | string) => {
-  if (typeof value === 'string') return value;
+  if (typeof value === "string") return value;
 
   // jsonld
-  if (value && typeof value[0] === 'string') {
+  if (value && typeof value[0] === "string") {
     return value.map((item) => cleanIngredientAmounts(item as string));
   }
 
@@ -32,7 +32,7 @@ const transformIngredients = (value: any[] | string) => {
     return mappedItems;
   }
 
-  logger('transformIngredients:microdata:item without properties', value);
+  logger("transformIngredients:microdata:item without properties", value);
   return [];
 };
 

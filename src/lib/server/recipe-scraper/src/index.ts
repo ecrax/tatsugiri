@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { CheerioAPI, load } from 'cheerio';
-import MicrodataScraper from './scrapers/MicrodataScraper';
-import JsonLdScraper from './scrapers/JsonLdScraper';
-import logger from './utils/logger';
+import axios from "axios";
+import { CheerioAPI, load } from "cheerio";
+import MicrodataScraper from "./scrapers/MicrodataScraper";
+import JsonLdScraper from "./scrapers/JsonLdScraper";
+import logger from "./utils/logger";
 
-const errorMessage = 'Could not find recipe data';
+const errorMessage = "Could not find recipe data";
 
 export type Recipe = {
   url: string;
@@ -53,7 +53,7 @@ const scraper = async (
       url,
     } as Recipe;
   } catch (error) {
-    logger('main:JsonLdScraper', {
+    logger("main:JsonLdScraper", {
       ...(error as object),
       url,
     });
@@ -73,7 +73,7 @@ const scraper = async (
       url,
     } as Recipe;
   } catch (error) {
-    logger('main:MicrodataScraper', {
+    logger("main:MicrodataScraper", {
       ...(error as object),
       url,
     });
