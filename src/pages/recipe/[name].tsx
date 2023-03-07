@@ -1,6 +1,10 @@
 import { type NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+
+
+import { type Recipe } from "@prisma/client";
 import { LinkIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
 
@@ -154,6 +158,41 @@ const RecipeInstructions: React.FC<{
   </>
 );
 
+const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => (
+  <article className="grid max-w-7xl grid-cols-3 gap-x-8 pt-6">
+    <div>
+      <RecipeImage image={recipe.image} name={recipe.name} />
+
+      <div className="mt-10">
+        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 dark:border-b-slate-700">
+          Ingredients
+        </h2>
+        <RecipeIngredients recipeIngredients={recipe.recipeIngredients} />
+      </div>
+    </div>
+    <div className="col-span-2">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        {recipe.name}
+      </h1>
+      <RecipeDescription description={recipe.description} />
+      <RecipeLink url={recipe.url} />
+      <RecipeCategories recipeCategories={recipe.recipeCategories} />
+      <RecipeTimes
+        cookTime={recipe.cookTime}
+        prepTime={recipe.prepTime}
+        totalTime={recipe.totalTime}
+      />
+
+      <div>
+        <h2 className="font-headline pt-16 pb-4 text-3xl font-bold tracking-tight">
+          Instructions
+        </h2>
+        <RecipeInstructions recipeInstructions={recipe.recipeInstructions} />
+      </div>
+    </div>
+  </article>
+);
+
 const RecipePage: NextPage = () => {
   const router = useRouter();
   const { name } = router.query;
@@ -176,42 +215,13 @@ const RecipePage: NextPage = () => {
             <Button>Delete</Button>
           </div>
         </Header>
-        <article className="grid max-w-7xl grid-cols-3 gap-x-8 pt-6">
-          <div>
-            <RecipeImage image={recipe?.image} name={recipe?.name} />
-
-            <div className="mt-10">
-              <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 dark:border-b-slate-700">
-                Ingredients
-              </h2>
-              <RecipeIngredients
-                recipeIngredients={recipe?.recipeIngredients}
-              />
-            </div>
+        {recipe ? (
+          <RecipeContent recipe={recipe} />
+        ) : (
+          <div className="flex h-full justify-center items-center">
+            Loading...
           </div>
-          <div className="col-span-2">
-            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-              {recipe?.name}
-            </h1>
-            <RecipeDescription description={recipe?.description} />
-            <RecipeLink url={recipe?.url} />
-            <RecipeCategories recipeCategories={recipe?.recipeCategories} />
-            <RecipeTimes
-              cookTime={recipe?.cookTime}
-              prepTime={recipe?.prepTime}
-              totalTime={recipe?.totalTime}
-            />
-
-            <div>
-              <h2 className="font-headline pt-16 pb-4 text-3xl font-bold tracking-tight">
-                Instructions
-              </h2>
-              <RecipeInstructions
-                recipeInstructions={recipe?.recipeInstructions}
-              />
-            </div>
-          </div>
-        </article>
+        )}
       </div>
     </main>
   );
