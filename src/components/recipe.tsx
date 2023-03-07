@@ -1,6 +1,8 @@
 import Link from "next/link";
 
-import { Recipe } from "@prisma/client";
+
+
+import { type Recipe } from "@prisma/client";
 import { LinkIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
 
