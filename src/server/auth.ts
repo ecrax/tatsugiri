@@ -1,4 +1,5 @@
 import { type GetServerSidePropsContext } from "next";
+
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";

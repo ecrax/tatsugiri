@@ -2,8 +2,6 @@ import { type NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-
-
 import { type Recipe } from "@prisma/client";
 import { LinkIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";

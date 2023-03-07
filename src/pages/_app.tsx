@@ -1,5 +1,6 @@
 import { type AppType } from "next/app";
 import { Outfit as FontSans } from "next/font/google";
+
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
