@@ -18,7 +18,7 @@ const Header = () => {
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
             <Link
-              href={"https://github.com/ecrax"}
+              href={"https://github.com/ecrax/tatsugiri"}
               target="_blank"
               rel="noreferrer"
             >

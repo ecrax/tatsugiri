@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import React, { useEffect, type ReactNode } from "react";
 
 import { type Recipe } from "@prisma/client";
 import { Plus } from "lucide-react";
@@ -20,6 +20,7 @@ import {
   SheetTitle,
 } from "@/components/ui/Sheet";
 import { Textarea } from "@/components/ui/Textarea";
+import { ScrollArea } from "./ScrollArea";
 import { Separator } from "./Seperator";
 
 type FormRecipe = {
@@ -39,6 +40,60 @@ type FormRecipe = {
   | "keyword"
 >;
 
+const getDefaultRecipe = (recipe: Recipe) => {
+  return {
+    ...recipe,
+    recipeIngredients:
+      recipe.recipeIngredients.length > 0
+        ? recipe.recipeIngredients.map((v) => {
+            return {
+              value: v,
+            };
+          })
+        : [{ value: "" }],
+    recipeInstructions:
+      recipe.recipeInstructions.length > 0
+        ? recipe.recipeInstructions.map((v) => {
+            return {
+              value: v,
+            };
+          })
+        : [{ value: "" }],
+    recipeCategories:
+      recipe.recipeCategories.length > 0
+        ? recipe.recipeCategories.map((v) => {
+            return {
+              value: v,
+            };
+          })
+        : [{ value: "" }],
+    recipeCuisines:
+      recipe.recipeCuisines.length > 0
+        ? recipe.recipeCuisines.map((v) => {
+            return {
+              value: v,
+            };
+          })
+        : [{ value: "" }],
+    recipeTypes:
+      recipe.recipeTypes.length > 0
+        ? recipe.recipeTypes.map((v) => {
+            return {
+              value: v,
+            };
+          })
+        : [{ value: "" }],
+    keyword:
+      recipe.keyword.length > 0
+        ? recipe.keyword.map((v) => {
+            return {
+              value: v,
+            };
+          })
+        : [{ value: "" }],
+  };
+};
+
 const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
   const {
     register,
@@ -48,88 +103,88 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     reset,
     formState: { errors },
   } = useForm<FormRecipe>({
-    defaultValues: {
-      ...recipe,
-      recipeIngredients: recipe.recipeIngredients.map((v) => {
-        return {
-          value: v,
-        };
-      }),
-      recipeInstructions: recipe.recipeInstructions.map((v) => {
-        return {
-          value: v,
-        };
-      }),
-      recipeCategories: recipe.recipeCategories.map((v) => {
-        return {
-          value: v,
-        };
-      }),
-      recipeCuisines: recipe.recipeCuisines.map((v) => {
-        return {
-          value: v,
-        };
-      }),
-      recipeTypes: recipe.recipeTypes.map((v) => {
-        return {
-          value: v,
-        };
-      }),
-      keyword: recipe.keyword.map((v) => {
-        return {
-          value: v,
-        };
-      }),
-    },
+    defaultValues: getDefaultRecipe(recipe),
   });
+
+  // This is stupid but it works
+  useEffect(() => {
+    reset(getDefaultRecipe(recipe));
+  }, [recipe, reset]);
+
   return (
     <SheetContent position={"right"} size="default">
-      <SheetHeader>
-        <SheetTitle>Edit recipe</SheetTitle>
-        <SheetDescription>
-          Make changes to your recipe here. Click save when you&apos;re done.
-        </SheetDescription>
-      </SheetHeader>
-      <form>
-        <div className="grid gap-4 py-4">
-          <TextInput register={register} id="name">
-            Name:
-          </TextInput>
-          <TextInput register={register} id="image">
-            Image url:
-          </TextInput>
-          <TextAreaInput register={register} id="description">
-            Description:
-          </TextAreaInput>
-          <TextInput register={register} id="url">
-            Source:
-          </TextInput>
-          <TextInput register={register} id="totalTime">
-            Total time:
-          </TextInput>
-          <TextInput register={register} id="prepTime">
-            Prep time:
-          </TextInput>
-          <TextInput register={register} id="cookTime">
-            Cook time:
-          </TextInput>
-          <Separator />
-          <IngredientsInput
-            control={control}
-            register={register}
-          ></IngredientsInput>
-        </div>
-        <SheetFooter>
-          <Button
-            type="button"
-            className={buttonVariants({ variant: "outline" })}
-            onClick={() => reset()}
-          >
-            Reset
-          </Button>
-          <Button type="submit">Save changes</Button>
-        </SheetFooter>
-      </form>
+      <ScrollArea className="h-full w-full rounded-md pr-4 pb-4 mt-6">
+        <SheetHeader>
+          <SheetTitle>Edit recipe</SheetTitle>
+          <SheetDescription>
+            Make changes to your recipe here. Click save when you&apos;re done.
+          </SheetDescription>
+        </SheetHeader>
+        <form className="pb-4">
+          <div className="grid gap-4 py-4">
+            <TextInput register={register} id="name">
+              Name:
+            </TextInput>
+            <TextInput register={register} id="image">
+              Image url:
+            </TextInput>
+            <TextAreaInput register={register} id="description">
+              Description:
+            </TextAreaInput>
+            <TextInput register={register} id="url">
+              Source:
+            </TextInput>
+            <TextInput register={register} id="totalTime">
+              Total time:
+            </TextInput>
+            <TextInput register={register} id="prepTime">
+              Prep time:
+            </TextInput>
+            <TextInput register={register} id="cookTime">
+              Cook time:
+            </TextInput>
+            <Separator />
+            <GroupInput
+              control={control}
+              register={register}
+              type="recipeIngredients"
+            >
+              Ingredients:
+            </GroupInput>
+            <Separator />
+            <GroupInput
+              control={control}
+              register={register}
+              type="recipeInstructions"
+              textArea
+            >
+              Instructions:
+            </GroupInput>
+            <Separator />
+            <GroupInput
+              control={control}
+              register={register}
+              type="recipeCategories"
+            >
+              Categories:
+            </GroupInput>
+            <Separator />
+            <GroupInput control={control} register={register} type="keyword">
+              Keywords:
+            </GroupInput>
+          </div>
+          <SheetFooter>
+            <Button
+              type="button"
+              className={buttonVariants({ variant: "outline" })}
+              onClick={() => reset()}
+            >
+              Reset
+            </Button>
+            <Button type="submit">Save changes</Button>
+          </SheetFooter>
+        </form>
+      </ScrollArea>
     </SheetContent>
   );
 };
@@ -160,35 +215,44 @@ const TextAreaInput: React.FC<{
   </div>
 );
 
-const IngredientsInput: React.FC<{
+const destructiveButtonStyle = buttonVariants({
+  variant: "destructive",
+});
+
+const GroupInput: React.FC<{
   register: UseFormRegister<FormRecipe>;
   control: Control<FormRecipe, unknown>;
+  type:
+    | "recipeIngredients"
+    | "recipeInstructions"
+    | "recipeCategories"
+    | "recipeCuisines"
+    | "recipeTypes"
+    | "keyword";
   children?: ReactNode;
-}> = ({ register, children, control }) => {
+  textArea?: boolean;
+}> = ({ register, children, control, type, textArea }) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "recipeIngredients",
-  });
-
-  const destructiveButtonStyle = buttonVariants({
-    variant: "destructive",
+    name: type,
   });
 
   return (
     <div className="grid grid-cols-4 items-center gap-y-2 gap-x-4">
       {fields.map((field, index) => {
         return (
-          <>
+          <React.Fragment key={field.id}>
             {index == 0 && (
               <Label className="text-left col-span-1 col-start-1 col-end-1">
-                Ingredients:
+                {children}
               </Label>
             )}
             <div className="col-span-3 col-start-2 flex gap-2">
-              <Input
-                key={field.id}
-                {...register(`recipeIngredients.${index}.value`)}
-              />
+              {textArea ? (
+                <Textarea rows={50} {...register(`${type}.${index}.value`)} />
+              ) : (
+                <Input {...register(`${type}.${index}.value`)} />
+              )}
               {fields.length > 1 && (
                 <Button
                   type="button"
@@ -199,10 +263,16 @@ const IngredientsInput: React.FC<{
                 </Button>
               )}
             </div>
-          </>
+          </React.Fragment>
         );
       })}
-      <Button type="button" className="" onClick={() => append({ value: "" })}>
+      <Button
+        type="button"
+        className={buttonVariants({
+          variant: "outline",
+        })}
+        onClick={() => append({ value: "" })}
+      >
         <Plus /> Add
       </Button>
     </div>

@@ -45,7 +45,7 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
               recipes.map((r) => (
                 //? Better/more useful info on hover
                 <HoverCard key={r.name}>
-                  <HoverCardTrigger>
+                  <HoverCardTrigger asChild>
                     <Link
                       className={clsx(
                         "group flex w-full items-center rounded-md py-2 px-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800",

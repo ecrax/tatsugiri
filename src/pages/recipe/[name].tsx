@@ -14,9 +14,15 @@ const RecipePage: NextPage = () => {
   const { name } = router.query;
 
   if (!name || Array.isArray(name)) {
-    return <p>recipe not found</p>;
+    return <p>recipe name not valid</p>;
+  } else {
+    return <RecipePageContent recipeName={name} />;
   }
+};
 
+const RecipePageContent: React.FC<{ recipeName: string }> = ({
+  recipeName: name,
+}) => {
   const { data: recipe } = api.recipe.getByName.useQuery({ name });
 
   return (
