@@ -1,10 +1,15 @@
 import Link from "next/link";
 
+
+
 import { type Recipe } from "@prisma/client";
 import { LinkIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
 
+
+
 import { Separator } from "@/components/ui/Seperator";
+
 
 const RecipeImage: React.FC<{
   image: string | undefined | null;
@@ -151,7 +156,7 @@ const RecipeInstructions: React.FC<{
 );
 
 const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => (
-  <article className="grid grid-areas-slim lg:grid-areas-wide lg:grid-cols-wide max-w-7xl gap-x-8 pt-6">
+  <article className="grid grid-areas-slim lg:grid-areas-wide lg:grid-cols-wide lg:grid-rows-wide max-w-7xl gap-x-8 pt-6">
     <div className="grid-in-a">
       <RecipeImage image={recipe.image} name={recipe.name} />
 
@@ -177,7 +182,7 @@ const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => (
     </div>
 
     <div className="grid-in-c">
-      <h2 className="font-headline pt-10 lg:pt-2 pb-4 text-3xl font-bold tracking-tight">
+      <h2 className="font-headline pt-10 pb-4 text-3xl font-bold tracking-tight">
         Instructions
       </h2>
       <RecipeInstructions recipeInstructions={recipe.recipeInstructions} />

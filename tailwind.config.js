@@ -20,6 +20,9 @@ module.exports = {
       gridTemplateColumns: {
         wide: "1fr 2fr",
       },
+      gridTemplateRows: {
+        wide: "auto 1fr",
+      },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
