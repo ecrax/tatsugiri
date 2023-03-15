@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 import { api } from "@/utils/api";
@@ -29,6 +30,9 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
 
   return (
     <ProtectedRoute>
+      <Head>
+        <title>{name}</title>
+      </Head>
       <main className="grid min-h-screen grid-cols-1 md:grid-cols-4 2xl:grid-cols-6">
         <RecipeSidebar selectedRecipe={name} />
 

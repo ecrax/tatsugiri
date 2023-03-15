@@ -5,6 +5,11 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="icon" type="image/x-icon" href="/favicon.png" />
+        <meta
+          name="description"
+          content="Scrape, edit and store recipes from the web"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <body className="min-h-screen bg-white font-sans text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-50">
         <Main />

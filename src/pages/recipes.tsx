@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { type NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 import { Plus } from "lucide-react";
@@ -22,6 +23,9 @@ const Recipes: NextPage = () => {
 
   return (
     <ProtectedRoute>
+      <Head>
+        <title>Recipes</title>
+      </Head>
       <main className="grid min-h-screen grid-cols-1 md:grid-cols-4 2xl:grid-cols-6">
         <RecipeSidebar />
         <div className="col-span-3 border-l col-start-1 md:col-start-2 border-l-slate-200 px-8 py-6 2xl:col-span-5">
