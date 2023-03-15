@@ -12,6 +12,7 @@ import Header from "@/components/ui/Header";
 import RecipeSidebar from "@/components/ui/RecipeSidebar";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 
+
 const RecipePage: NextPage = () => {
   const router = useRouter();
   const { name } = router.query;
@@ -23,6 +24,7 @@ const RecipePage: NextPage = () => {
   }
 };
 
+//TODO: gotta think about where to put context buttons on mobile
 const RecipePageContent: React.FC<{ recipeName: string }> = ({
   recipeName: name,
 }) => {
@@ -36,7 +38,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
         <div className="col-span-3 col-start-1 md:col-start-2 border-l border-l-slate-200 px-8 py-6 2xl:col-span-5">
           <Header>
             {recipe && (
-              <div className="flex gap-4">
+              <div className="gap-4 hidden md:flex">
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button>Edit</Button>
