@@ -52,7 +52,7 @@ const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
 
   return (
     <>
-      <div className="flex justify-between px-8 py-6">
+      <div className="flex justify-between md:px-8 pb-6 md:pt-6">
         <Link href={"/recipes"}>
           <h1 className="flex items-center text-2xl font-semibold">
             <Soup className="mr-2" /> Tatsugiri
@@ -63,7 +63,7 @@ const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
         </button> */}
       </div>
 
-      <div className="space-y-4 px-8">
+      <div className="space-y-4 md:px-8">
         <Input
           placeholder="Search..."
           onChange={(e) => setSearch(e.currentTarget.value.toLowerCase())}

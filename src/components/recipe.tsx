@@ -1,10 +1,15 @@
 import Link from "next/link";
 
+
+
 import { type Recipe } from "@prisma/client";
 import { LinkIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
 
+
+
 import { Separator } from "@/components/ui/Seperator";
+
 
 const RecipeImage: React.FC<{
   image: string | undefined | null;
@@ -12,7 +17,7 @@ const RecipeImage: React.FC<{
 }> = ({ image, name }) => (
   <>
     {image && (
-      <div className="relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] w-screen max-w-[100vw] py-8 xl:left-0 xl:right-0 xl:m-0 xl:flex xl:w-full xl:p-0">
+      <div className="relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] w-screen max-w-[100vw] py-8 md:left-0 md:right-0 md:m-0 md:flex md:w-full md:p-0 md:pt-10 lg:pt-0">
         <img
           src={image}
           alt={`An image of "${name ?? "food"}"`}
@@ -151,8 +156,8 @@ const RecipeInstructions: React.FC<{
 );
 
 const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => (
-  <article className="grid max-w-7xl grid-cols-3 gap-x-8 pt-6">
-    <div>
+  <article className="grid grid-areas-slim lg:grid-areas-wide lg:grid-cols-wide max-w-7xl gap-x-8 pt-6">
+    <div className="grid-in-a">
       <RecipeImage image={recipe.image} name={recipe.name} />
 
       <div className="mt-10">
@@ -162,7 +167,7 @@ const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => (
         <RecipeIngredients recipeIngredients={recipe.recipeIngredients} />
       </div>
     </div>
-    <div className="col-span-2">
+    <div className="grid-in-b">
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         {recipe.name}
       </h1>
@@ -174,13 +179,13 @@ const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => (
         prepTime={recipe.prepTime}
         totalTime={recipe.totalTime}
       />
+    </div>
 
-      <div>
-        <h2 className="font-headline pt-16 pb-4 text-3xl font-bold tracking-tight">
-          Instructions
-        </h2>
-        <RecipeInstructions recipeInstructions={recipe.recipeInstructions} />
-      </div>
+    <div className="grid-in-c">
+      <h2 className="font-headline pt-10 lg:pt-2 pb-4 text-3xl font-bold tracking-tight">
+        Instructions
+      </h2>
+      <RecipeInstructions recipeInstructions={recipe.recipeInstructions} />
     </div>
   </article>
 );

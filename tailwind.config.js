@@ -13,6 +13,13 @@ module.exports = {
       },
     },
     extend: {
+      gridTemplateAreas: {
+        wide: ["a b", "a c"],
+        slim: ["b", "a", "c"],
+      },
+      gridTemplateColumns: {
+        wide: "1fr 2fr",
+      },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
@@ -32,5 +39,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@savvywombat/tailwindcss-grid-areas"),
+  ],
+  variants: {
+    gridTemplateAreas: ["responsive"],
+  },
 };
