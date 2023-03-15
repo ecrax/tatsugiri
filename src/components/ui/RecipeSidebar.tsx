@@ -1,17 +1,44 @@
 import { useState } from "react";
 import Link from "next/link";
 
+
+
 import { clsx } from "clsx";
-import { ClipboardList, Soup, Timer } from "lucide-react";
+import { ClipboardList, MenuIcon, Soup, Timer } from "lucide-react";
 
 import { api } from "@/utils/api";
 import { Input } from "@/components/ui/Input";
 import { Separator } from "@/components/ui/Seperator";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
-
+import { Sheet, SheetContent, SheetTrigger } from "./Sheet";
 const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
   selectedRecipe,
 }) => {
+  return (
+    <aside className="absolute md:static">
+      <div className="inline md:hidden">
+        <Sheet>
+          <SheetTrigger className="py-8 pl-8 w-10 h-10">
+            <MenuIcon className="w-6 h-6" />
+          </SheetTrigger>
+          <SheetContent
+            portalStyles="inline md:hidden"
+            className="inline md:hidden"
+            position={"left"}
+            size="content"
+          >
+            <Content selectedRecipe={selectedRecipe} />
+          </SheetContent>
+        </Sheet>
+      </div>
+      <div className="hidden md:inline">
+        <Content selectedRecipe={selectedRecipe} />
+      </div>
+    </aside>
+  );
+};
+
+const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
   const { data: allRecipes } = api.recipe.getRecipesForSidebar.useQuery();
 
   const [search, setSearch] = useState<string>();
@@ -24,12 +51,18 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
   }
 
   return (
-    <aside>
-      <Link href={"/recipes"}>
-        <h1 className="flex items-center px-8 py-6 text-2xl font-semibold">
-          <Soup className="mr-2" /> Tatsugiri
-        </h1>
-      </Link>
+    <>
+      <div className="flex justify-between px-8 py-6">
+        <Link href={"/recipes"}>
+          <h1 className="flex items-center text-2xl font-semibold">
+            <Soup className="mr-2" /> Tatsugiri
+          </h1>
+        </Link>
+        {/* <button>
+          <ChevronLeft />
+        </button> */}
+      </div>
+
       <div className="space-y-4 px-8">
         <Input
           placeholder="Search..."
@@ -82,7 +115,7 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
         )}
         <Separator />
       </div>
-    </aside>
+    </>
   );
 };
 

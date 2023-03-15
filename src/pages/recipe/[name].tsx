@@ -30,10 +30,10 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
 
   return (
     <ProtectedRoute>
-      <main className="grid min-h-screen grid-cols-4 2xl:grid-cols-6">
+      <main className="grid min-h-screen grid-cols-1 md:grid-cols-4 2xl:grid-cols-6">
         <RecipeSidebar selectedRecipe={name} />
 
-        <div className="col-span-3 border-l border-l-slate-200 px-8 py-6 2xl:col-span-5">
+        <div className="col-start-1 md:col-start-2 border-l border-l-slate-200 px-8 py-6 2xl:col-span-5">
           <Header>
             {recipe && (
               <div className="flex gap-4">
