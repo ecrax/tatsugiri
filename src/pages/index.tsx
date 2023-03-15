@@ -4,6 +4,7 @@ import Link from "next/link";
 
 
 
+import { Soup } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { Icons } from "@/components/icons";
@@ -86,8 +87,9 @@ const Home: NextPage = () => {
       <Header />
       <main className="container grid items-center gap-6 pt-6 pb-8 md:py-10">
         <div className="flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
+          <h1 className="flex justify-center items-center text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             {/* Create <span className="text-emerald-500">T3</span> App */}
+            <Soup className="mr-6 h-16 w-16" />
             Tatsugiri
           </h1>
           {sessionData ? (
