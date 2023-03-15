@@ -1,8 +1,10 @@
 import { type ReactNode } from "react";
 import { useRouter } from "next/router";
 
+
+
 import { LogOut, Plus, Settings, User } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import {
@@ -54,7 +56,10 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
               </div>
               <span>⌘+,</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center">
+            <DropdownMenuItem
+              className="flex items-center"
+              onClick={() => void signOut()}
+            >
               <LogOut className="mr-2 h-4 w-4" />
               Log out
             </DropdownMenuItem>
