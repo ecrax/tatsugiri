@@ -21,7 +21,7 @@ const RecipeImage: React.FC<{
         <img
           src={image}
           alt={`An image of "${name ?? "food"}"`}
-          className="max-h-[32rem] md:rounded-md object-cover"
+          className="max-h-[32rem] w-full md:rounded-md object-cover"
         />
       </div>
     )}
