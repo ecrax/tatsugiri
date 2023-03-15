@@ -1,8 +1,6 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 
-
-
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import RecipeContent from "@/components/recipe";
@@ -11,7 +9,6 @@ import RecipeEditSheet from "@/components/ui/EditSheet";
 import Header from "@/components/ui/Header";
 import RecipeSidebar from "@/components/ui/RecipeSidebar";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
-
 
 const RecipePage: NextPage = () => {
   const router = useRouter();

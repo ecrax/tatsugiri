@@ -2,11 +2,7 @@ import { useState } from "react";
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 
-
-
 import { Plus } from "lucide-react";
-
-
 
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
