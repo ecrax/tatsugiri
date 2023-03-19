@@ -81,7 +81,8 @@ const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
                     <Link
                       className={clsx(
                         "group flex w-full items-center rounded-md py-2 px-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800",
-                        r.name === selectedRecipe && "bg-slate-200 dark:bg-slate-700"
+                        r.name === selectedRecipe &&
+                          "bg-slate-200 dark:bg-slate-700"
                       )}
                       href={`/recipe/${r.name ?? ""}`}
                     >

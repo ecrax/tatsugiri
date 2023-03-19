@@ -1,15 +1,10 @@
 import Link from "next/link";
 
-
-
 import { type Recipe } from "@prisma/client";
 import { LinkIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
 
-
-
 import { Separator } from "@/components/ui/Seperator";
-
 
 const RecipeImage: React.FC<{
   image: string | undefined | null;
