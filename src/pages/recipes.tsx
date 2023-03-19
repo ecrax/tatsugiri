@@ -28,7 +28,7 @@ const Recipes: NextPage = () => {
       </Head>
       <main className="grid min-h-screen grid-cols-1 md:grid-cols-4 2xl:grid-cols-6">
         <RecipeSidebar />
-        <div className="col-span-3 border-l col-start-1 md:col-start-2 border-l-slate-200 px-8 py-6 2xl:col-span-5">
+        <div className="col-span-3 border-l col-start-1 md:col-start-2 border-l-slate-200 dark:border-l-slate-700 px-8 py-6 2xl:col-span-5">
           <Header />
           <article className="pt-6">
             Select a recipe or whatever

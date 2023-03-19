@@ -62,7 +62,6 @@ const Header = () => {
             >
               {sessionData ? "Sign out" : "Sign in"}
             </Button>
-            {/* <ThemeToggle /> */}
           </nav>
         </div>
       </div>
