@@ -1,10 +1,15 @@
 import Link from "next/link";
 
+
+
 import { type Recipe } from "@prisma/client";
 import { LinkIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
 
+
+
 import { Separator } from "@/components/ui/Seperator";
+
 
 const RecipeImage: React.FC<{
   image: string | undefined | null;
@@ -95,7 +100,7 @@ const RecipeCategories: React.FC<{
 }> = ({ recipeCategories }) => (
   <>
     {recipeCategories && (
-      <div className="flex gap-2 pt-4">
+      <div className="flex gap-2 pt-4 flex-wrap">
         {recipeCategories.map((category, i) => (
           <p
             key={`${category}+${i}`}
