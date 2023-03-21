@@ -2,8 +2,15 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+
+
+import { Trash } from "lucide-react";
+
+
+
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
 import { Button } from "@/components/ui/Button";
 import RecipeEditSheet from "@/components/ui/EditSheet";
@@ -26,7 +33,11 @@ const RecipePage: NextPage = () => {
 const RecipePageContent: React.FC<{ recipeName: string }> = ({
   recipeName: name,
 }) => {
+  const router = useRouter();
   const { data: recipe } = api.recipe.getByName.useQuery({ name });
+  const deleteMutation = api.recipe.delete.useMutation({onSuccess: () => {
+    void router.push("/recipes");
+  }});
 
   return (
     <ProtectedRoute>
@@ -47,7 +58,23 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                   <RecipeEditSheet recipe={recipe} />
                 </Sheet>
                 <Button>Share</Button>
-                <Button>Delete</Button>
+                <Button
+                  disabled={deleteMutation.isLoading}
+                  onClick={() => {
+                    //TODO: add a confirmation modal
+                    deleteMutation.mutate({ name });
+                  }}
+                >
+                  {deleteMutation.isLoading ? (
+                    <>
+                      <Icons.loadingSpinner /> Loading...
+                    </>
+                  ) : (
+                    <>
+                      <Trash className="mr-2 h-4 w-4" /> Delete
+                    </>
+                  )}
+                </Button>
               </div>
             )}
           </Header>

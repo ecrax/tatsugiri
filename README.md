@@ -7,6 +7,7 @@
 - amoled theme
 - proper landing page
 - display/handle form errors
+- invaidate queries on mutation
 
 ### DONE
 - spacing between "b" and "c" cell is too large

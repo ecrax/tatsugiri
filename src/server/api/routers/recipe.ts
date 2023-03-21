@@ -47,6 +47,7 @@ export const recipeRouter = createTRPCRouter({
       try {
         const recipe = await recipeDataScraper(input.url);
         console.log(recipe);
+        //TODO ensure recipe with name doesn't already exist
         const entry: Recipe = await ctx.prisma.recipe.create({
           data: {
             cookTime: recipe.cookTime,
@@ -87,6 +88,7 @@ export const recipeRouter = createTRPCRouter({
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
 
+      //TODO ensure recipe with name doesn't already exist
       const entry = await ctx.prisma.recipe.create({
         data: {
           ...input.recipe,
@@ -99,5 +101,29 @@ export const recipeRouter = createTRPCRouter({
       });
 
       return { name: entry.name };
+    }),
+  delete: protectedProcedure
+    .input(z.object({ name: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      if (!ctx.session.user.email) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      const recipe = await ctx.prisma.recipe.findFirstOrThrow({
+        where: {
+          name: input.name,
+          AND: {
+            owner: {
+              email: ctx.session.user.email,
+            },
+          },
+        },
+      });
+
+      await ctx.prisma.recipe.delete({
+        where: {
+          id: recipe.id,
+        },
+      });
     }),
 });

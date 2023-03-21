@@ -163,11 +163,9 @@ const Recipes: NextPage = () => {
                   Keywords:
                 </GroupInput>
               </div>
-              <Button>
+              <Button disabled={formMutation.isLoading}>
                 {formMutation.isLoading ? (
-                  <Button>
-                    <Icons.loadingSpinner /> Loading...
-                  </Button>
+                   <> <Icons.loadingSpinner /> Loading...</>
                 ) : (
                   <>
                     <Plus className="mr-2 h-4 w-4" /> Submit

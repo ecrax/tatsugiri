@@ -25,7 +25,7 @@ model Recipe {
     createdAt          DateTime @default(now())
     owner              User     @relation(fields: [userId], references: [id])
     url                String?
-    name               String?
+    name               String?  
     image              String?
     description        String?
     cookTime           String?
@@ -37,7 +37,7 @@ model Recipe {
     recipeCategories   String[]
     recipeCuisines     String[]
     recipeTypes        String[]
-    keywords            String[]
+    keywords           String[]
     userId             String
 }
 
