@@ -37,7 +37,7 @@ model Recipe {
     recipeCategories   String[]
     recipeCuisines     String[]
     recipeTypes        String[]
-    keyword            String[]
+    keywords            String[]
     userId             String
 }
 

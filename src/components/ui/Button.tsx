@@ -1,5 +1,7 @@
 import * as React from "react";
 
+
+
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/utils/utils";
@@ -12,9 +14,9 @@ const buttonVariants = cva(
         default:
           "bg-slate-900 text-white hover:bg-slate-700 dark:bg-slate-50 dark:text-slate-900",
         destructive:
-          "bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-600",
+          "bg-red-500 dark:bg-red-500 dark:text-white text-white hover:bg-red-600 dark:hover:bg-red-600",
         outline:
-          "bg-transparent text-slate-900 border border-slate-200 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100",
+          "bg-transparent dark:bg-slate-900 text-slate-900 border border-slate-200 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100",
         subtle:
           "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-100",
         ghost:

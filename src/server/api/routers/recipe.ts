@@ -1,4 +1,5 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { recipeSchema } from "@/server/zodSchemas";
 import { type Recipe } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import recipeDataScraper from "recipe-scraper";
@@ -55,7 +56,7 @@ export const recipeRouter = createTRPCRouter({
             description: recipe.description,
             image: recipe.image,
             name: recipe.name,
-            keyword: recipe.keywords,
+            keywords: recipe.keywords,
             recipeCategories: recipe.recipeCategories,
             recipeCuisines: recipe.recipeCuisines,
             recipeIngredients: recipe.recipeIngredients,
@@ -78,5 +79,25 @@ export const recipeRouter = createTRPCRouter({
           message: "Could not parse recipe",
         });
       }
+    }),
+  new: protectedProcedure
+    .input(z.object({ recipe: recipeSchema }))
+    .mutation(async ({ input, ctx }) => {
+      if (!ctx.session.user.email) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      const entry = await ctx.prisma.recipe.create({
+        data: {
+          ...input.recipe,
+          owner: {
+            connect: {
+              email: ctx.session.user.email,
+            },
+          },
+        },
+      });
+
+      return { name: entry.name };
     }),
 });

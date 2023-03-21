@@ -1,17 +1,9 @@
-import React, { useEffect, type ReactNode } from "react";
+import React, { useEffect } from "react";
 
 import { type Recipe } from "@prisma/client";
-import { Plus } from "lucide-react";
-import {
-  useFieldArray,
-  useForm,
-  type Control,
-  type UseFormRegister,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { Button, buttonVariants } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
 import {
   SheetContent,
   SheetDescription,
@@ -19,26 +11,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/Sheet";
-import { Textarea } from "@/components/ui/Textarea";
+import { GroupInput, TextAreaInput, TextInput } from "../inputs";
+import { type FormRecipe } from "../types";
 import { ScrollArea } from "./ScrollArea";
 import { Separator } from "./Seperator";
-
-type FormRecipe = {
-  recipeIngredients: { value: string }[];
-  recipeInstructions: { value: string }[];
-  recipeCategories: { value: string }[];
-  recipeCuisines: { value: string }[];
-  recipeTypes: { value: string }[];
-  keyword: { value: string }[];
-} & Omit<
-  Recipe,
-  | "recipeIngredients"
-  | "recipeInstructions"
-  | "recipeCategories"
-  | "recipeCuisines"
-  | "recipeTypes"
-  | "keyword"
->;
 
 const getDefaultRecipe = (recipe: Recipe) => {
   return {
@@ -83,9 +59,9 @@ const getDefaultRecipe = (recipe: Recipe) => {
             };
           })
         : [{ value: "" }],
-    keyword:
-      recipe.keyword.length > 0
-        ? recipe.keyword.map((v) => {
+    keywords:
+      recipe.keywords.length > 0
+        ? recipe.keywords.map((v) => {
             return {
               value: v,
             };
@@ -169,7 +145,7 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
               Categories:
             </GroupInput>
             <Separator />
-            <GroupInput control={control} register={register} type="keyword">
+            <GroupInput control={control} register={register} type="keywords">
               Keywords:
             </GroupInput>
           </div>
@@ -186,96 +162,6 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
         </form>
       </ScrollArea>
     </SheetContent>
-  );
-};
-
-const TextInput: React.FC<{
-  register: UseFormRegister<FormRecipe>;
-  id: keyof FormRecipe;
-  children: ReactNode;
-}> = ({ register, children, id }) => (
-  <div className="grid grid-cols-4 items-center gap-4">
-    <Label htmlFor={id} className="text-left">
-      {children}
-    </Label>
-    <Input id={id} className="col-span-3" {...register(id)} />
-  </div>
-);
-
-const TextAreaInput: React.FC<{
-  register: UseFormRegister<FormRecipe>;
-  id: keyof FormRecipe;
-  children: ReactNode;
-}> = ({ register, children, id }) => (
-  <div className="grid grid-cols-4 items-center gap-4">
-    <Label htmlFor={id} className="text-left">
-      {children}
-    </Label>
-    <Textarea id={id} className="col-span-3" {...register(id)} />
-  </div>
-);
-
-const destructiveButtonStyle = buttonVariants({
-  variant: "destructive",
-});
-
-const GroupInput: React.FC<{
-  register: UseFormRegister<FormRecipe>;
-  control: Control<FormRecipe, unknown>;
-  type:
-    | "recipeIngredients"
-    | "recipeInstructions"
-    | "recipeCategories"
-    | "recipeCuisines"
-    | "recipeTypes"
-    | "keyword";
-  children?: ReactNode;
-  textArea?: boolean;
-}> = ({ register, children, control, type, textArea }) => {
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: type,
-  });
-
-  return (
-    <div className="grid grid-cols-4 items-center gap-y-2 gap-x-4">
-      {fields.map((field, index) => {
-        return (
-          <React.Fragment key={field.id}>
-            {index == 0 && (
-              <Label className="text-left col-span-1 col-start-1 col-end-1">
-                {children}
-              </Label>
-            )}
-            <div className="col-span-3 col-start-2 flex gap-2">
-              {textArea ? (
-                <Textarea rows={50} {...register(`${type}.${index}.value`)} />
-              ) : (
-                <Input {...register(`${type}.${index}.value`)} />
-              )}
-              {fields.length > 1 && (
-                <Button
-                  type="button"
-                  className={destructiveButtonStyle}
-                  onClick={() => remove(index)}
-                >
-                  -
-                </Button>
-              )}
-            </div>
-          </React.Fragment>
-        );
-      })}
-      <Button
-        type="button"
-        className={buttonVariants({
-          variant: "outline",
-        })}
-        onClick={() => append({ value: "" })}
-      >
-        <Plus /> Add
-      </Button>
-    </div>
   );
 };
 
