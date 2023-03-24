@@ -142,9 +142,9 @@ const RecipeInstructions: React.FC<{
   <>
     {recipeInstructions &&
       recipeInstructions.map((instruction, i) => (
-        <div key={`${instruction}+${i}`} className="flex py-2">
-          <div className="w-1/12">{i + 1}.</div>
-          <div className="w-11/12">{instruction}</div>
+        <div key={`${instruction}+${i}`} className="flex py-2 break-words">
+          {/* <p className="w-1/12">{i + 1}.</p> */}
+          <p className="break-words">{instruction}</p>
         </div>
       ))}
   </>
