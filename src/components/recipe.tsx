@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+
+
 import { type Recipe } from "@prisma/client";
 import { LinkIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
@@ -139,15 +141,14 @@ const RecipeTimes: React.FC<{
 const RecipeInstructions: React.FC<{
   recipeInstructions: string[] | undefined | null;
 }> = ({ recipeInstructions }) => (
-  <>
+  <ol className="list-decimal pl-4">
     {recipeInstructions &&
       recipeInstructions.map((instruction, i) => (
-        <div key={`${instruction}+${i}`} className="flex py-2 break-words">
-          {/* <p className="w-1/12">{i + 1}.</p> */}
-          <p className="break-words">{instruction}</p>
-        </div>
+        <li key={`${instruction}+${i}`} className="break-words py-2">
+          {instruction}
+        </li>
       ))}
-  </>
+  </ol>
 );
 
 const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => (

@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 
+
+
 import { type Recipe } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
+
+
+import { api } from "@/utils/api";
 import { Button, buttonVariants } from "@/components/ui/Button";
-import {
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/Sheet";
+import { SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/Sheet";
 import { GroupInput, TextAreaInput, TextInput } from "../inputs";
 import { type FormRecipe } from "../types";
 import { ScrollArea } from "./ScrollArea";
 import { Separator } from "./Seperator";
+
 
 const getDefaultRecipe = (recipe: Recipe) => {
   return {
@@ -82,6 +82,34 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     defaultValues: getDefaultRecipe(recipe),
   });
 
+  const updateMutation = api.recipe.update.useMutation();
+
+  const onSubmit = async (data: FormRecipe) => {
+    await updateMutation.mutateAsync({
+      recipe: {
+        ...data,
+        name: data.name ?? "",
+        description: data.description ?? "",
+        cookTime: data.cookTime ?? "",
+        prepTime: data.prepTime ?? "",
+        totalTime: data.totalTime ?? "",
+        recipeYield: data.recipeYield ?? "",
+        url: data.url ?? "",
+        image: data.image ?? "",
+        recipeIngredients: data.recipeIngredients?.map((v) => v.value) ?? [""],
+        recipeInstructions: data.recipeInstructions?.map((v) => v.value) ?? [
+          "",
+        ],
+        recipeCategories: data.recipeCategories?.map((v) => v.value) ?? [""],
+        recipeCuisines: data.recipeCuisines?.map((v) => v.value) ?? [""],
+        recipeTypes: data.recipeTypes?.map((v) => v.value) ?? [""],
+        keywords: data.keywords?.map((v) => v.value) ?? [""],
+      },
+    });
+
+    console.log(data);
+  };
+
   // This is stupid but it works
   useEffect(() => {
     reset(getDefaultRecipe(recipe));
@@ -96,7 +124,8 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
             Make changes to your recipe here. Click save when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
-        <form className="pb-4">
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <form className="pb-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-4 py-4">
             <TextInput register={register} id="name">
               Name:
