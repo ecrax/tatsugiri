@@ -1,33 +1,149 @@
 import { type ReactNode } from "react";
 import { useRouter } from "next/router";
 
-
-
-import { LogOut, Plus, Settings, User } from "lucide-react";
+import { useAtom } from "jotai";
+import {
+  LogOut,
+  MinusIcon,
+  Plus,
+  PlusIcon,
+  Settings,
+  ShoppingCartIcon,
+  User,
+} from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 
-
-
+import { cartAtom } from "@/utils/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/DropdownMenu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
 
 const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const { data: sessionData } = useSession();
   const router = useRouter();
   const { setTheme, theme } = useTheme();
+  const [cart, setCart] = useAtom(cartAtom);
 
   return (
     <header className="flex items-center justify-between">
       <div>{children}</div>
       <div className="flex items-center gap-4">
-        <span>Welcome back</span>
+        {/* <span>Welcome back</span> */}
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div className="relative">
+              <ShoppingCartIcon className="my-2 h-6 w-6" />
+              {cart.length > 0 && (
+                <span className="absolute top-[3.25px] left-[6px] inline-flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold leading-none text-white ">
+                  {cart.reduce((acc, item) => acc + item.amount, 0)}
+                </span>
+              )}
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="sm:w-96 w-screen" align="end">
+            <div className="flex justify-between">
+              <DropdownMenuLabel>Shopping List</DropdownMenuLabel>
+              <div className="flex gap-2">
+                <button
+                  className="text-sm font-medium py-1.5 px-2 underline underline-offset-2"
+                  onClick={() =>
+                    void navigator.clipboard.writeText(
+                      cart.reduce(
+                        (acc, item) =>
+                          acc + `${item.amount}x ${item.name}` + "\n",
+                        ""
+                      )
+                    )
+                  }
+                >
+                  Copy
+                </button>
+                <button
+                  className="text-sm font-medium py-1.5 px-2 underline underline-offset-2"
+                  onClick={() => setCart([])}
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+            <DropdownMenuSeparator />
+            {cart.length > 0 ? (
+              cart.map((item, i) => (
+                <div
+                  className="relative flex items-center rounded-sm py-1.5 px-2 text-sm font-medium dark:focus:bg-slate-700"
+                  key={i}
+                >
+                  <div className="flex gap-4 items-start">
+                    <div className="flex gap-2 items-center">
+                      <button
+                        onClick={() => {
+                          if (item.amount > 1) {
+                            setCart([
+                              ...cart.map((cartItem, index) => {
+                                if (index === i) {
+                                  return {
+                                    name: cartItem.name,
+                                    amount: cartItem.amount - 1,
+                                  };
+                                }
+                                return cartItem;
+                              }),
+                            ]);
+                          } else {
+                            setCart([
+                              ...cart.filter((_, index) => index !== i),
+                            ]);
+                          }
+                        }}
+                      >
+                        <MinusIcon className="w-4 h-4" />
+                      </button>
+                      <span className="text-gray-500">{item.amount}x</span>
+                      <button
+                        onClick={() => {
+                          setCart([
+                            ...cart.map((cartItem, index) => {
+                              if (index === i) {
+                                return {
+                                  name: cartItem.name,
+                                  amount: cartItem.amount + 1,
+                                };
+                              }
+                              return cartItem;
+                            }),
+                          ]);
+                        }}
+                      >
+                        <PlusIcon className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <span>{item.name}</span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <span className="relative flex items-center rounded-sm py-1.5 px-2 text-sm font-medium dark:focus:bg-slate-700">
+                Cart empty, add some items :)
+              </span>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <DropdownMenu>
           <DropdownMenuTrigger className="focus:rounded-full focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
             <Avatar>
               <AvatarImage src={sessionData?.user.image ?? ""} alt="@ecrax" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>
+                {sessionData?.user.name?.substring(0, 2)}
+              </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">

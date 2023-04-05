@@ -3,9 +3,11 @@ import Link from "next/link";
 
 
 import { type Recipe } from "@prisma/client";
-import { LinkIcon } from "lucide-react";
+import { useAtom } from "jotai";
+import { LinkIcon, PlusCircleIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
 
+import { cartAtom } from "@/utils/atoms";
 import { Separator } from "@/components/ui/Seperator";
 
 const RecipeImage: React.FC<{
@@ -27,38 +29,70 @@ const RecipeImage: React.FC<{
 
 const RecipeIngredients: React.FC<{
   recipeIngredients: string[] | undefined | null;
-}> = ({ recipeIngredients }) => (
-  <>
-    {recipeIngredients &&
-      recipeIngredients.map((ingredient, i) => (
-        <div key={`${ingredient}+${i}`}>
-          <div className="flex py-2 diagonal-fractions tracking-normal">
-            {parseIngredient(ingredient).map((v, i) => {
-              if (!v.quantity && v.unitOfMeasureID) {
-                return (
-                  <span key={`${v.description}+${i}`} className="mr-1">
-                    {v.description}
-                  </span>
-                );
-              } else {
-                return (
-                  <span key={`${v.description}+${i}`} className="mr-1">
-                    <span className="mr-1 font-bold">
-                      {`${v.quantity ?? ""}${
-                        v.quantity2 ? " " + v.quantity2.toString() : ""
-                      } ${v.unitOfMeasure ?? ""}`}
-                    </span>
-                    <span>{v.description}</span>
-                  </span>
-                );
-              }
-            })}
+}> = ({ recipeIngredients }) => {
+  const [cart, setCart] = useAtom(cartAtom);
+
+  return (
+    <>
+      {recipeIngredients &&
+        recipeIngredients.map((ingredient, i) => (
+          <div key={`${ingredient}+${i}`}>
+            <div className="flex justify-between">
+              <div className="flex py-2 diagonal-fractions tracking-normal">
+                {parseIngredient(ingredient).map((v, i) => {
+                  if (!v.quantity && v.unitOfMeasureID) {
+                    return (
+                      <span key={`${v.description}+${i}`} className="mr-1">
+                        {v.description}
+                      </span>
+                    );
+                  } else {
+                    return (
+                      <span key={`${v.description}+${i}`} className="mr-1">
+                        <span className="mr-1 font-bold">
+                          {`${v.quantity ?? ""}${
+                            v.quantity2 ? " " + v.quantity2.toString() : ""
+                          } ${v.unitOfMeasure ?? ""}`}
+                        </span>
+                        <span>{v.description}</span>
+                      </span>
+                    );
+                  }
+                })}
+              </div>
+              <button
+                onClick={() => {
+                  cart.some((item) => item.name === ingredient)
+                    ? setCart(
+                        cart.map((item) => {
+                          if (item.name === ingredient) {
+                            return {
+                              name: item.name,
+                              amount: item.amount + 1,
+                            };
+                          } else {
+                            return item;
+                          }
+                        })
+                      )
+                    : setCart([
+                        ...cart,
+                        {
+                          name: ingredient,
+                          amount: 1,
+                        },
+                      ]);
+                }}
+              >
+                <PlusCircleIcon className="text-slate-500 w-5 h-5" />
+              </button>
+            </div>
+            {i + 1 < recipeIngredients.length && <Separator />}
           </div>
-          {i + 1 < recipeIngredients.length && <Separator />}
-        </div>
-      ))}
-  </>
-);
+        ))}
+    </>
+  );
+};
 
 const RecipeDescription: React.FC<{
   description: string | undefined | null;
@@ -151,39 +185,74 @@ const RecipeInstructions: React.FC<{
   </ol>
 );
 
-const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => (
-  <article className="grid grid-areas-slim lg:grid-areas-wide lg:grid-cols-wide lg:grid-rows-wide max-w-7xl gap-x-8 pt-6">
-    <div className="grid-in-a">
-      <RecipeImage image={recipe.image} name={recipe.name} />
+const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
+  const [cart, setCart] = useAtom(cartAtom);
 
-      <div className="mt-10">
-        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 dark:border-b-slate-700">
-          Ingredients
-        </h2>
-        <RecipeIngredients recipeIngredients={recipe.recipeIngredients} />
+  return (
+    <article className="grid grid-areas-slim lg:grid-areas-wide lg:grid-cols-wide lg:grid-rows-wide max-w-7xl gap-x-8 pt-6">
+      <div className="grid-in-a">
+        <RecipeImage image={recipe.image} name={recipe.name} />
+
+        <div className="mt-10">
+          <div className="flex gap-4 items-center pb-2">
+            <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0 dark:border-b-slate-700">
+              Ingredients
+            </h2>
+            <button
+              onClick={() => {
+                const ingredients = recipe.recipeIngredients.map(
+                  (ingredient) => {
+                    return {
+                      name: ingredient,
+                      amount: 1,
+                    };
+                  }
+                );
+
+                // merge ingredients with existing cart
+                ingredients.forEach((ingredient) => {
+                  const existingIngredient = cart.find(
+                    (i) => i.name === ingredient.name
+                  );
+
+                  if (existingIngredient) {
+                    existingIngredient.amount += ingredient.amount;
+                  } else {
+                    cart.push(ingredient);
+                  }
+                });
+
+                setCart([...cart]);
+              }}
+            >
+              <PlusCircleIcon />
+            </button>
+          </div>
+          <RecipeIngredients recipeIngredients={recipe.recipeIngredients} />
+        </div>
       </div>
-    </div>
-    <div className="grid-in-b">
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-        {recipe.name}
-      </h1>
-      <RecipeDescription description={recipe.description} />
-      <RecipeLink url={recipe.url} />
-      <RecipeCategories recipeCategories={recipe.recipeCategories} />
-      <RecipeTimes
-        cookTime={recipe.cookTime}
-        prepTime={recipe.prepTime}
-        totalTime={recipe.totalTime}
-      />
-    </div>
+      <div className="grid-in-b">
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+          {recipe.name}
+        </h1>
+        <RecipeDescription description={recipe.description} />
+        <RecipeLink url={recipe.url} />
+        <RecipeCategories recipeCategories={recipe.recipeCategories} />
+        <RecipeTimes
+          cookTime={recipe.cookTime}
+          prepTime={recipe.prepTime}
+          totalTime={recipe.totalTime}
+        />
+      </div>
 
-    <div className="grid-in-c">
-      <h2 className="font-headline pt-10 pb-4 text-3xl font-bold tracking-tight">
-        Instructions
-      </h2>
-      <RecipeInstructions recipeInstructions={recipe.recipeInstructions} />
-    </div>
-  </article>
-);
+      <div className="grid-in-c">
+        <h2 className="font-headline pt-10 pb-4 text-3xl font-bold tracking-tight">
+          Instructions
+        </h2>
+        <RecipeInstructions recipeInstructions={recipe.recipeInstructions} />
+      </div>
+    </article>
+  );
+};
 
 export default RecipeContent;
