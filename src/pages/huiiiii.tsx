@@ -1,13 +1,14 @@
+import styles from "./huiiiii.module.css";
+
 const Huiiiii = () => {
   return (
     <div
-      className="w-screen h-screen flex justify-center items-center"
-      style={{
-        background:
-          "linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)",
-      }}
+      className={`w-screen h-screen flex justify-center items-center ${
+        styles.body ?? ""
+      }`}
     >
       <div
+        className="animate-[spin_2s_ease-in-out_infinite]"
         style={{
           color: "red",
           fontFamily: "Comic Sans MS",
