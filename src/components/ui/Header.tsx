@@ -140,7 +140,7 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
         <DropdownMenu>
           <DropdownMenuTrigger className="focus:rounded-full focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
             <Avatar>
-              <AvatarImage src={sessionData?.user.image ?? ""} alt="@ecrax" />
+              <AvatarImage src={sessionData?.user.image ?? ""} alt={`@${sessionData?.user.name ?? ""}`} />
               <AvatarFallback>
                 {sessionData?.user.name?.substring(0, 2)}
               </AvatarFallback>
