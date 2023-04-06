@@ -11,7 +11,7 @@ const Huiiiii = () => {
         className="animate-[spin_2s_ease-in-out_infinite]"
         style={{
           color: "red",
-          fontFamily: "Comic Sans MS",
+          fontFamily: "'Comic Sans MS', 'Comic Sans', cursive",
           fontSize: "4rem",
           textAlign: "center",
           rotate: "45deg",
