@@ -23,7 +23,7 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
           <SheetContent
             portalStyles="inline md:hidden"
             className="inline md:hidden"
-            position={"left"}
+            position="left"
             size="content"
           >
             <Content selectedRecipe={selectedRecipe} />

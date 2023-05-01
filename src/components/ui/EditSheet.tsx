@@ -117,7 +117,7 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
   }, [recipe, reset]);
 
   return (
-    <SheetContent position={"right"} size="default">
+    <SheetContent position="right" size="content">
       <ScrollArea className="h-full w-full rounded-md pr-4 pb-4 mt-6">
         <SheetHeader>
           <SheetTitle>Edit recipe</SheetTitle>

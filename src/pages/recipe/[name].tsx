@@ -26,7 +26,6 @@ const RecipePage: NextPage = () => {
   }
 };
 
-//TODO: gotta think about where to put context buttons on mobile
 const RecipePageContent: React.FC<{ recipeName: string }> = ({
   recipeName: name,
 }) => {
