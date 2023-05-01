@@ -2,29 +2,15 @@ import { type ReactNode } from "react";
 import { useRouter } from "next/router";
 
 import { useAtom } from "jotai";
-import {
-  LogOut,
-  MinusIcon,
-  Plus,
-  PlusIcon,
-  Settings,
-  ShoppingCartIcon,
-  User,
-} from "lucide-react";
+import { LogOut, MinusIcon, Plus, PlusIcon, Settings, ShoppingCartIcon, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 
 import { cartAtom } from "@/utils/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
+
 
 const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const { data: sessionData } = useSession();
@@ -33,7 +19,7 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useAtom(cartAtom);
 
   return (
-    <header className="flex items-center justify-between">
+    <header className="flex items-center justify-end">
       <div>{children}</div>
       <div className="flex items-center gap-4">
         {/* <span>Welcome back</span> */}
@@ -140,7 +126,10 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
         <DropdownMenu>
           <DropdownMenuTrigger className="focus:rounded-full focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
             <Avatar>
-              <AvatarImage src={sessionData?.user.image ?? ""} alt={`@${sessionData?.user.name ?? ""}`} />
+              <AvatarImage
+                src={sessionData?.user.image ?? ""}
+                alt={`@${sessionData?.user.name ?? ""}`}
+              />
               <AvatarFallback>
                 {sessionData?.user.name?.substring(0, 2)}
               </AvatarFallback>

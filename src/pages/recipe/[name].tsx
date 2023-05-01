@@ -4,18 +4,17 @@ import { useRouter } from "next/router";
 
 
 
-import { Trash } from "lucide-react";
-
-
+import { Edit3, Share, Trash } from "lucide-react";
 
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonVariants } from "@/components/ui/Button";
 import RecipeEditSheet from "@/components/ui/EditSheet";
 import Header from "@/components/ui/Header";
 import RecipeSidebar from "@/components/ui/RecipeSidebar";
+import { Separator } from "@/components/ui/Seperator";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 
 const RecipePage: NextPage = () => {
@@ -35,9 +34,11 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
 }) => {
   const router = useRouter();
   const { data: recipe } = api.recipe.getByName.useQuery({ name });
-  const deleteMutation = api.recipe.delete.useMutation({onSuccess: () => {
-    void router.push("/recipes");
-  }});
+  const deleteMutation = api.recipe.delete.useMutation({
+    onSuccess: () => {
+      void router.push("/recipes");
+    },
+  });
 
   return (
     <ProtectedRoute>
@@ -50,31 +51,42 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
         <div className="col-span-3 col-start-1 md:col-start-2 border-l border-l-slate-200 dark:border-l-slate-700 px-8 py-6 2xl:col-span-5">
           <Header>
             {recipe && (
-              <div className="gap-4 hidden md:flex">
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button>Edit</Button>
-                  </SheetTrigger>
-                  <RecipeEditSheet recipe={recipe} />
-                </Sheet>
-                <Button>Share</Button>
-                <Button
-                  disabled={deleteMutation.isLoading}
-                  onClick={() => {
-                    //TODO: add a confirmation modal
-                    deleteMutation.mutate({ name });
-                  }}
-                >
-                  {deleteMutation.isLoading ? (
-                    <>
-                      <Icons.loadingSpinner /> Loading...
-                    </>
-                  ) : (
-                    <>
-                      <Trash className="mr-2 h-4 w-4" /> Delete
-                    </>
-                  )}
-                </Button>
+              <div className="flex">
+                <div className="gap-4 flex pr-4">
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <Button
+                        className={buttonVariants({
+                          variant: "ghost",
+                        })}
+                      >
+                        <Edit3 className="mr-2 h-4 w-4" /> Edit
+                      </Button>
+                    </SheetTrigger>
+                    <RecipeEditSheet recipe={recipe} />
+                  </Sheet>
+                  <Button>
+                    <Share className="mr-2 h-4 w-4" /> Share
+                  </Button>
+                  <Button
+                    disabled={deleteMutation.isLoading}
+                    onClick={() => {
+                      //TODO: add a confirmation modal
+                      deleteMutation.mutate({ name });
+                    }}
+                  >
+                    {deleteMutation.isLoading ? (
+                      <>
+                        <Icons.loadingSpinner /> Loading...
+                      </>
+                    ) : (
+                      <>
+                        <Trash className="mr-2 h-4 w-4" /> Delete
+                      </>
+                    )}
+                  </Button>
+                  <Separator orientation="vertical" />
+                </div>
               </div>
             )}
           </Header>
