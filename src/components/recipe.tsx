@@ -7,7 +7,9 @@ import { useAtom } from "jotai";
 import { LinkIcon, PlusCircleIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
 
-import { cartAtom } from "@/utils/atoms";
+
+
+import { cartAtom } from "@/lib/atoms";
 import { Separator } from "@/components/ui/Seperator";
 
 const RecipeImage: React.FC<{
@@ -84,7 +86,7 @@ const RecipeIngredients: React.FC<{
                       ]);
                 }}
               >
-                <PlusCircleIcon className="text-slate-500 w-5 h-5" />
+                <PlusCircleIcon className="text-muted-foreground w-5 h-5" />
               </button>
             </div>
             {i + 1 < recipeIngredients.length && <Separator />}
@@ -99,7 +101,7 @@ const RecipeDescription: React.FC<{
 }> = ({ description }) => (
   <>
     {description && (
-      <blockquote className="mt-6 border-l-2 border-slate-300 pl-6 italic text-slate-800 dark:border-slate-600 dark:text-slate-200">
+      <blockquote className="mt-6 border-l-2 pl-6 italic text-primary">
         {description}
       </blockquote>
     )}
@@ -109,7 +111,7 @@ const RecipeDescription: React.FC<{
 const RecipeLink: React.FC<{ url: string | null | undefined }> = ({ url }) => (
   <>
     {url && (
-      <div className="flex items-center space-x-2 pt-2 text-slate-500">
+      <div className="flex items-center space-x-2 pt-2 text-muted-foreground">
         from:
         <div />
         <Link
@@ -135,7 +137,7 @@ const RecipeCategories: React.FC<{
         {recipeCategories.map((category, i) => (
           <p
             key={`${category}+${i}`}
-            className="rounded-md border border-slate-600 py-2 px-4 text-sm"
+            className="rounded-md border border-muted-foreground/70 py-2 px-4 text-sm"
           >
             {category}
           </p>
@@ -153,19 +155,19 @@ const RecipeTimes: React.FC<{
   <div className="flex gap-6 pt-8">
     {totalTime && (
       <p>
-        <span className="pr-2 text-slate-500">Total</span>
+        <span className="pr-2 text-muted-foreground">Total</span>
         <span>{totalTime}</span>
       </p>
     )}
     {prepTime && (
       <p>
-        <span className="pr-2 text-slate-500">Prep</span>
+        <span className="pr-2 text-muted-foreground">Prep</span>
         <span>{prepTime}</span>
       </p>
     )}
     {cookTime && (
       <p>
-        <span className="pr-2 text-slate-500">Cook</span>
+        <span className="pr-2 text-muted-foreground">Cook</span>
         <span>{cookTime}</span>
       </p>
     )}
@@ -195,7 +197,7 @@ const RecipeContent: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
 
         <div className="mt-10">
           <div className="flex gap-4 items-center pb-2">
-            <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0 dark:border-b-slate-700">
+            <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0 border-b-border">
               Ingredients
             </h2>
             <button

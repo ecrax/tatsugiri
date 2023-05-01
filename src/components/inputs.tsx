@@ -100,7 +100,7 @@ export const GroupInput: React.FC<{
       <Button
         type="button"
         className={buttonVariants({
-          variant: "outline",
+          variant: "secondary",
         })}
         onClick={() => append({ value: "" })}
       >

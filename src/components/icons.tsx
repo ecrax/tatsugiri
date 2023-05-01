@@ -1,11 +1,8 @@
-import {
-  Laptop,
-  Moon,
-  SunMedium,
-  Twitter,
-  type Icon as LucideIcon,
-  type LucideProps,
-} from "lucide-react";
+import { Laptop, Moon, SunMedium, Twitter, type Icon as LucideIcon, type LucideProps } from "lucide-react";
+
+
+
+
 
 export type Icon = LucideIcon;
 
@@ -37,7 +34,7 @@ export const Icons = {
       height="44"
       viewBox="0 0 44 44"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-4 h-4 mr-2 dark:stroke-slate-900 stroke-slate-100"
+      className="w-4 h-4 mr-2 stroke-primary-foreground"
     >
       <g fill="none" fillRule="evenodd" strokeWidth="2">
         <circle cx="22" cy="22" r="1">

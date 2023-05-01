@@ -78,7 +78,7 @@ const Recipes: NextPage = () => {
       </Head>
       <main className="grid min-h-screen grid-cols-1 md:grid-cols-4 2xl:grid-cols-6">
         <RecipeSidebar />
-        <div className="col-span-3 border-l col-start-1 md:col-start-2 border-l-slate-200 dark:border-l-slate-700 px-8 py-6 2xl:col-span-5">
+        <div className="col-span-3 border-l col-start-1 md:col-start-2 border-l-border px-8 py-6 2xl:col-span-5">
           <Header />
           <article className="pt-6">
             <p className="text-lg pb-4">Scrape a recipe</p>
@@ -100,9 +100,9 @@ const Recipes: NextPage = () => {
             </div>
             {scrapeMutation.error && <p>{scrapeMutation.error.message}</p>}
             <div className="relative flex py-5 items-center justify-center">
-              <div className="flex-grow border-t border-2 mt-[2px] rounded-md border-slate-200 dark:border-slate-700"></div>
-              <span className="flex-shrink mx-4 dark:text-slate-400">or</span>
-              <div className="flex-grow border-t border-2 mt-[2px] rounded-md border-slate-200 dark:border-slate-700"></div>
+              <div className="flex-grow border-t border-2 mt-[2px] rounded-md border-muted-foreground"></div>
+              <span className="flex-shrink mx-4 text-muted-foreground">or</span>
+              <div className="flex-grow border-t border-2 mt-[2px] rounded-md border-muted-foreground"></div>
             </div>
             <p className="text-lg">Add a recipe yourself</p>
             {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}

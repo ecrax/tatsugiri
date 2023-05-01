@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
 
+
+
 import { clsx } from "clsx";
 import { ClipboardList, MenuIcon, Soup, Timer } from "lucide-react";
 
@@ -80,9 +82,8 @@ const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
                   <HoverCardTrigger asChild>
                     <Link
                       className={clsx(
-                        "group flex w-full items-center rounded-md py-2 px-2 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800",
-                        r.name === selectedRecipe &&
-                          "bg-slate-200 dark:bg-slate-700"
+                        "group flex w-full items-center rounded-md py-2 px-2 text-sm font-medium hover:bg-accent transition-colors",
+                        r.name === selectedRecipe && "bg-accent"
                       )}
                       href={`/recipe/${r.name ?? ""}`}
                     >

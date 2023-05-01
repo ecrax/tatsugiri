@@ -1,16 +1,25 @@
 import { type ReactNode } from "react";
 import { useRouter } from "next/router";
 
+
+
 import { useAtom } from "jotai";
-import { LogOut, MinusIcon, Plus, PlusIcon, Settings, ShoppingCartIcon, User } from "lucide-react";
+import {
+  LogOut,
+  MinusIcon,
+  Plus,
+  PlusIcon,
+  Settings,
+  ShoppingCartIcon,
+  User,
+} from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 
-import { cartAtom } from "@/utils/atoms";
+import { cartAtom } from "@/lib/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
-
 
 const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const { data: sessionData } = useSession();
@@ -64,7 +73,7 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
             {cart.length > 0 ? (
               cart.map((item, i) => (
                 <div
-                  className="relative flex items-center rounded-sm py-1.5 px-2 text-sm font-medium dark:focus:bg-slate-700"
+                  className="relative flex items-center rounded-sm py-1.5 px-2 text-sm font-medium transition-colors hover:bg-accent"
                   key={i}
                 >
                   <div className="flex gap-4 items-start">
@@ -116,7 +125,7 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
                 </div>
               ))
             ) : (
-              <span className="relative flex items-center rounded-sm py-1.5 px-2 text-sm font-medium dark:focus:bg-slate-700">
+              <span className="relative flex items-center rounded-sm py-1.5 px-2 text-sm font-medium">
                 Cart empty, add some items :)
               </span>
             )}
@@ -124,7 +133,7 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
         </DropdownMenu>
 
         <DropdownMenu>
-          <DropdownMenuTrigger className="focus:rounded-full focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
+          <DropdownMenuTrigger className="focus:rounded-full focus:outline-none focus:ring-2 focus:ring-muted focus:ring-offset-2">
             <Avatar>
               <AvatarImage
                 src={sessionData?.user.image ?? ""}
