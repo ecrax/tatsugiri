@@ -46,27 +46,39 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
       <main className="grid min-h-screen grid-cols-1 md:grid-cols-4 2xl:grid-cols-6">
         <RecipeSidebar selectedRecipe={name} />
 
-        <div className="col-span-3 col-start-1 md:col-start-2 border-l border-l-border dark:border-l-border px-8 py-6 2xl:col-span-5">
+        <div className="col-span-3 col-start-1 md:col-start-2 border-l border-l-border px-8 py-6 2xl:col-span-5">
           <Header>
             {recipe && (
               <div className="flex">
-                <div className="gap-4 flex pr-4">
+                <div className="gap-2 flex pr-4">
                   <Sheet>
                     <SheetTrigger asChild>
                       <Button
                         className={buttonVariants({
                           variant: "ghost",
+                          className: "bg-transparent text-primary",
                         })}
                       >
-                        <Edit3 className="mr-2 h-4 w-4" /> Edit
+                        <Edit3 className="h-4 w-4" />{" "}
+                        <span className="sr-only">Edit</span>
                       </Button>
                     </SheetTrigger>
                     <RecipeEditSheet recipe={recipe} />
                   </Sheet>
-                  <Button>
-                    <Share className="mr-2 h-4 w-4" /> Share
+                  <Button
+                    className={buttonVariants({
+                      variant: "ghost",
+                      className: "bg-transparent text-primary",
+                    })}
+                  >
+                    <Share className="h-4 w-4" />{" "}
+                    <span className="sr-only">Share</span>
                   </Button>
                   <Button
+                    className={buttonVariants({
+                      variant: "ghost",
+                      className: "bg-transparent text-primary",
+                    })}
                     disabled={deleteMutation.isLoading}
                     onClick={() => {
                       //TODO: add a confirmation modal
@@ -75,11 +87,13 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                   >
                     {deleteMutation.isLoading ? (
                       <>
-                        <Icons.loadingSpinner /> Loading...
+                        <Icons.loadingSpinner />
+                        <span className="sr-only">Loading</span>
                       </>
                     ) : (
                       <>
-                        <Trash className="mr-2 h-4 w-4" /> Delete
+                        <Trash className="h-4 w-4" />
+                        <span className="sr-only">Delete</span>
                       </>
                     )}
                   </Button>

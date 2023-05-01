@@ -1,6 +1,8 @@
 import { type ReactNode } from "react";
 import { useRouter } from "next/router";
 
+
+
 import { useAtom } from "jotai";
 import {
   LogOut,
@@ -25,6 +27,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
+import { buttonVariants } from "./Button";
+
 
 const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const { data: sessionData } = useSession();
@@ -39,10 +43,15 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
         {/* <span>Welcome back</span> */}
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <div className="relative">
+            <div
+              className={buttonVariants({
+                variant: "ghost",
+                className: " relative",
+              })}
+            >
               <ShoppingCartIcon className="my-2 h-6 w-6" />
               {cart.length > 0 && (
-                <span className="absolute top-[3.25px] left-[6px] inline-flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold leading-none text-white ">
+                <span className="absolute top-[11.25px] left-[21.5px] inline-flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold leading-none text-white ">
                   {cart.reduce((acc, item) => acc + item.amount, 0)}
                 </span>
               )}
