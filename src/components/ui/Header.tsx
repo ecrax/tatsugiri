@@ -1,8 +1,6 @@
 import { type ReactNode } from "react";
 import { useRouter } from "next/router";
 
-
-
 import { useAtom } from "jotai";
 import {
   LogOut,
@@ -28,7 +26,6 @@ import {
 } from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
 import { buttonVariants } from "./Button";
-
 
 const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const { data: sessionData } = useSession();
