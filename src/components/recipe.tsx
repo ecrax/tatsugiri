@@ -1,13 +1,9 @@
 import Link from "next/link";
 
-
-
 import { type Recipe } from "@prisma/client";
 import { useAtom } from "jotai";
 import { LinkIcon, PlusCircleIcon } from "lucide-react";
 import { parseIngredient } from "parse-ingredient";
-
-
 
 import { cartAtom } from "@/lib/atoms";
 import { Separator } from "@/components/ui/Seperator";

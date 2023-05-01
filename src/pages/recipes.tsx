@@ -165,7 +165,10 @@ const Recipes: NextPage = () => {
               </div>
               <Button disabled={formMutation.isLoading}>
                 {formMutation.isLoading ? (
-                   <> <Icons.loadingSpinner /> Loading...</>
+                  <>
+                    {" "}
+                    <Icons.loadingSpinner /> Loading...
+                  </>
                 ) : (
                   <>
                     <Plus className="mr-2 h-4 w-4" /> Submit

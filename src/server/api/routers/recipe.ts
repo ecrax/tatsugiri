@@ -121,7 +121,7 @@ export const recipeRouter = createTRPCRouter({
       });
 
       await ctx.prisma.recipe.update({
-        data:{
+        data: {
           ...input.recipe,
         },
         where: {

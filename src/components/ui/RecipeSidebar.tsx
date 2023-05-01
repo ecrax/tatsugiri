@@ -1,8 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
 
-
-
 import { clsx } from "clsx";
 import { ClipboardList, MenuIcon, Soup, Timer } from "lucide-react";
 

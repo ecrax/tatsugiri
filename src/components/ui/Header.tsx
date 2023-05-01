@@ -1,8 +1,6 @@
 import { type ReactNode } from "react";
 import { useRouter } from "next/router";
 
-
-
 import { useAtom } from "jotai";
 import {
   LogOut,
@@ -18,7 +16,14 @@ import { useTheme } from "next-themes";
 
 import { cartAtom } from "@/lib/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/DropdownMenu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
 
 const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {

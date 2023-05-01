@@ -1,20 +1,21 @@
 import React, { useEffect } from "react";
 
-
-
 import { type Recipe } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
-
-
 import { api } from "@/utils/api";
 import { Button, buttonVariants } from "@/components/ui/Button";
-import { SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/Sheet";
+import {
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/Sheet";
 import { GroupInput, TextAreaInput, TextInput } from "../inputs";
 import { type FormRecipe } from "../types";
 import { ScrollArea } from "./ScrollArea";
 import { Separator } from "./Seperator";
-
 
 const getDefaultRecipe = (recipe: Recipe) => {
   return {
