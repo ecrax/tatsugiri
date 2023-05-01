@@ -7,6 +7,8 @@ import {
   type LucideProps,
 } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 export type Icon = LucideIcon;
 
 export const Icons = {
@@ -37,7 +39,7 @@ export const Icons = {
       height="44"
       viewBox="0 0 44 44"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-4 h-4 mr-2 stroke-primary-foreground"
+      className={cn("w-4 h-4 mr-2 stroke-primary-foreground", props.className)}
     >
       <g fill="none" fillRule="evenodd" strokeWidth="2">
         <circle cx="22" cy="22" r="1">

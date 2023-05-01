@@ -2,13 +2,26 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+
+
+import { Close } from "@radix-ui/react-dialog";
 import { Edit3, Share, Trash } from "lucide-react";
+
+
 
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
 import { Button, buttonVariants } from "@/components/ui/Button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/Dialog";
 import RecipeEditSheet from "@/components/ui/EditSheet";
 import Header from "@/components/ui/Header";
 import RecipeSidebar from "@/components/ui/RecipeSidebar";
@@ -73,29 +86,59 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                     <Share className="h-4 w-4" />{" "}
                     <span className="sr-only">Share</span>
                   </Button>
-                  <Button
-                    className={buttonVariants({
-                      variant: "ghost",
-                      className: "bg-transparent text-primary",
-                    })}
-                    disabled={deleteMutation.isLoading}
-                    onClick={() => {
-                      //TODO: add a confirmation modal
-                      deleteMutation.mutate({ name });
-                    }}
-                  >
-                    {deleteMutation.isLoading ? (
-                      <>
-                        <Icons.loadingSpinner />
-                        <span className="sr-only">Loading</span>
-                      </>
-                    ) : (
-                      <>
+                  <Dialog>
+                    <DialogTrigger>
+                      <div
+                        className={buttonVariants({
+                          variant: "ghost",
+                          className: "bg-transparent text-primary",
+                        })}
+                      >
                         <Trash className="h-4 w-4" />
                         <span className="sr-only">Delete</span>
-                      </>
-                    )}
-                  </Button>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Are you absolutely sure?</DialogTitle>
+                        <DialogDescription>
+                          <div className="pb-4">
+                            This action cannot be undone. This will permanently
+                            delete this recipe.
+                          </div>
+                          <div className="flex gap-4">
+                            <Button
+                              className={buttonVariants({
+                                variant: "destructive",
+                              })}
+                              disabled={deleteMutation.isLoading}
+                              onClick={() => {
+                                deleteMutation.mutate({ name });
+                              }}
+                            >
+                              {deleteMutation.isLoading ? (
+                                <>
+                                  <Icons.loadingSpinner className="stroke-primary" />
+                                  <span>Loading...</span>
+                                </>
+                              ) : (
+                                <span className="">Delete</span>
+                              )}
+                            </Button>
+                            <Close>
+                              <div
+                                className={buttonVariants()}
+                                
+                              >
+                                Cancel
+                              </div>
+                            </Close>
+                          </div>
+                        </DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
+
                   <Separator orientation="vertical" />
                 </div>
               </div>

@@ -80,7 +80,7 @@ export const GroupInput: React.FC<{
             )}
             <div className="md:col-span-3 md:col-start-2 flex gap-2">
               {textArea ? (
-                <Textarea rows={50} {...register(`${type}.${index}.value`)} />
+                <Textarea rows={6} {...register(`${type}.${index}.value`)} />
               ) : (
                 <Input {...register(`${type}.${index}.value`)} />
               )}
