@@ -50,7 +50,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
           <Header>
             {recipe && (
               <div className="flex">
-                <div className="gap-2 flex pr-4">
+                <div className="gap-2 flex pr-2">
                   <Sheet>
                     <SheetTrigger asChild>
                       <Button

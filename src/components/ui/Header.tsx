@@ -36,14 +36,14 @@ const Header: React.FC<{ children?: ReactNode }> = ({ children }) => {
   return (
     <header className="flex items-center justify-end">
       <div>{children}</div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2">
         {/* <span>Welcome back</span> */}
         <DropdownMenu>
           <DropdownMenuTrigger>
             <div
               className={buttonVariants({
                 variant: "ghost",
-                className: " relative",
+                className: "relative",
               })}
             >
               <ShoppingCartIcon className="my-2 h-6 w-6" />
