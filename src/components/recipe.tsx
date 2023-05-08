@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+
+
 import { type Recipe } from "@prisma/client";
 import { useAtom } from "jotai";
 import { LinkIcon, PlusCircleIcon } from "lucide-react";
@@ -129,15 +131,17 @@ const RecipeCategories: React.FC<{
 }> = ({ recipeCategories }) => (
   <>
     {recipeCategories && (
-      <div className="flex gap-2 pt-4 flex-wrap">
-        {recipeCategories.map((category, i) => (
-          <p
-            key={`${category}+${i}`}
-            className="rounded-md border border-muted-foreground/70 py-2 px-4 text-sm"
-          >
-            {category}
-          </p>
-        ))}
+      <div className="flex gap-2 flex-wrap">
+        {recipeCategories
+          .filter((c) => c != "")
+          .map((category, i) => (
+            <p
+              key={`${category}+${i}`}
+              className="rounded-md border border-muted-foreground/70 py-2 px-4 mt-4 text-sm"
+            >
+              {category}
+            </p>
+          ))}
       </div>
     )}
   </>
