@@ -28,7 +28,7 @@ const Add: NextPage = () => {
         <div className="h-full col-span-3 border-l col-start-1 md:col-start-2 border-l-border px-8 py-6 2xl:col-span-5">
           <Header logo />
           <article className="pt-6">
-            <Tabs defaultValue="account">
+            <Tabs defaultValue="grid">
               <div className="flex justify-between items-center">
                 <div className="flex justify-between items-center gap-4">
                   <h2 className="text-lg font-medium">Your library</h2>
