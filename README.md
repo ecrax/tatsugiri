@@ -1,5 +1,8 @@
 # tatsugiri
 
+## Fixes
+- make name edit possible
+
 ## TODOs
 - all recipes overview
     - sorting, filtering, searching, etc.
@@ -8,6 +11,11 @@
 - display/handle form errors
 - invaidate queries on mutation
 
+- recipe sharing
+    - create new (shortened) url -> basically a url shortener
+
+- display time needed in recipes overview
+
 - pdf export
     - rust api endpoint (vercel function)
     - typst templates
@@ -15,6 +23,7 @@
     - https://github.com/vercel-community/rust
 
 - cdn for images
+- https://ui.shadcn.com/docs/components/command instead of search bar
 
 ### DONE
 - spacing between "b" and "c" cell is too large
