@@ -14,6 +14,8 @@
     - send data as json
     - https://github.com/vercel-community/rust
 
+- cdn for images
+
 ### DONE
 - spacing between "b" and "c" cell is too large
     - "b" and "c" try to become as tall as the "a" cell

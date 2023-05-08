@@ -62,9 +62,6 @@ const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
             <Soup className="mr-2" /> Tatsugiri
           </h1>
         </Link>
-        {/* <button>
-          <ChevronLeft />
-        </button> */}
       </div>
 
       <div className="space-y-4 md:px-8">
