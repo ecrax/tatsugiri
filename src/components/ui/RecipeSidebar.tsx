@@ -70,7 +70,7 @@ const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
           onChange={(e) => setSearch(e.currentTarget.value.toLowerCase())}
         />
         <h2 className="text-lg font-semibold">All Recipes</h2>
-        {!allRecipes && <p>Loading...</p>}
+        {/* {!allRecipes && <p>Loading...</p>} */}
         {allRecipes && (
           <div className="flex flex-col space-y-1">
             {allRecipes.length == 0 && <p>Wow such empty</p>}

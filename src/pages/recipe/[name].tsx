@@ -71,7 +71,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                           className: "bg-transparent text-primary",
                         })}
                       >
-                        <Edit3 className="h-4 w-4" />{" "}
+                        <Edit3 className="h-4 w-4" />
                         <span className="sr-only">Edit</span>
                       </Button>
                     </SheetTrigger>
@@ -83,7 +83,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                       className: "bg-transparent text-primary",
                     })}
                   >
-                    <Share className="h-4 w-4" />{" "}
+                    <Share className="h-4 w-4" />
                     <span className="sr-only">Share</span>
                   </Button>
                   <Dialog>
@@ -119,7 +119,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                               {deleteMutation.isLoading ? (
                                 <>
                                   <Icons.loadingSpinner className="stroke-primary" />
-                                  <span>Loading...</span>
+                                  <span className="sr-only">Loading...</span>
                                 </>
                               ) : (
                                 <span className="">Delete</span>
@@ -148,7 +148,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
             <RecipeContent recipe={recipe} />
           ) : (
             <div className="flex h-full justify-center items-center">
-              Loading...
+              <Icons.loadingSpinner className="stroke-primary w-6 h-6" />
             </div>
           )}
         </div>
