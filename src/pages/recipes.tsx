@@ -2,15 +2,21 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
+
+
 import { LayoutGrid, List, Plus } from "lucide-react";
+
+
 
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Icons } from "@/components/icons";
 import { buttonVariants } from "@/components/ui/Button";
+import { CommandMenu } from "@/components/ui/CommandMenu";
 import Header from "@/components/ui/Header";
 import { Separator } from "@/components/ui/Seperator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+
 
 const Add: NextPage = () => {
   const { data: allRecipes, isLoading } =
@@ -23,7 +29,14 @@ const Add: NextPage = () => {
       </Head>
       <main className="min-h-screen">
         <div className="h-full col-span-3 border-l col-start-1 md:col-start-2 border-l-border px-8 py-6 2xl:col-span-5">
-          <Header logo />
+          <Header logo>
+            {allRecipes && (
+              <CommandMenu
+                recipes={allRecipes}
+                className="sm:pr-12 md:w-40 lg:w-64"
+              />
+            )}
+          </Header>
           <article className="pt-6">
             <Tabs defaultValue="grid">
               <div className="flex justify-between items-center">
