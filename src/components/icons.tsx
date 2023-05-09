@@ -1,9 +1,13 @@
-import { Laptop, Moon, SunMedium, Twitter, type Icon as LucideIcon, type LucideProps } from "lucide-react";
-
-
+import {
+  Laptop,
+  Moon,
+  SunMedium,
+  Twitter,
+  type Icon as LucideIcon,
+  type LucideProps,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
-
 
 export type Icon = LucideIcon;
 

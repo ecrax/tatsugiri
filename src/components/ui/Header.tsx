@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 import { useAtom } from "jotai";
 import {
+  Library,
   LogOut,
   MinusIcon,
   Plus,
@@ -11,7 +12,6 @@ import {
   Settings,
   ShoppingCartIcon,
   Soup,
-  User,
 } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
@@ -176,9 +176,12 @@ const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
               <DropdownMenuContent align="end" className="w-52">
                 <DropdownMenuLabel>{sessionData?.user.name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="flex items-center justify-between">
+                <DropdownMenuItem
+                  onClick={() => void router.push("/recipes")}
+                  className="flex items-center justify-between"
+                >
                   <div className="flex items-center">
-                    <User className="mr-2 h-4 w-4" /> Profile
+                    <Library className="mr-2 h-4 w-4" /> Library
                   </div>
                   <span>⌘+L</span>
                 </DropdownMenuItem>

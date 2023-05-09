@@ -2,13 +2,10 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-
-
 import { api } from "@/utils/api";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
 import Header from "@/components/ui/Header";
-
 
 const SharedRecipePage: NextPage = () => {
   const router = useRouter();
@@ -45,7 +42,7 @@ const SharedRecipePageContent: React.FC<{ recipeId: string }> = ({
           )}
           {recipe && !error ? (
             <div className="flex justify-center">
-                <RecipeContent recipe={recipe} />
+              <RecipeContent recipe={recipe} />
             </div>
           ) : (
             <div className="flex h-full justify-center items-center">
