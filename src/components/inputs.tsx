@@ -1,5 +1,7 @@
 import React, { type ReactNode } from "react";
 
+
+
 import { Plus } from "lucide-react";
 import {
   useFieldArray,
@@ -11,7 +13,8 @@ import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 import { type FormRecipe } from "./types";
-import { Button, buttonVariants } from "./ui/Button";
+import { Button } from "./ui/Button";
+
 
 export const TextInput: React.FC<{
   register: UseFormRegister<FormRecipe>;
@@ -46,9 +49,7 @@ export const TextAreaInput: React.FC<{
   </div>
 );
 
-const destructiveButtonStyle = buttonVariants({
-  variant: "destructive",
-});
+
 
 export const GroupInput: React.FC<{
   register: UseFormRegister<FormRecipe>;
@@ -87,7 +88,7 @@ export const GroupInput: React.FC<{
               {fields.length > 1 && (
                 <Button
                   type="button"
-                  className={destructiveButtonStyle}
+                  variant="destructive"
                   onClick={() => remove(index)}
                 >
                   -
@@ -99,9 +100,7 @@ export const GroupInput: React.FC<{
       })}
       <Button
         type="button"
-        className={buttonVariants({
-          variant: "secondary",
-        })}
+        variant="secondary"
         onClick={() => append({ value: "" })}
       >
         <Plus className="mr-2 h-4 w-4" /> Add

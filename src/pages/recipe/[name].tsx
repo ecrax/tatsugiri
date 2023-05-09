@@ -2,14 +2,18 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+
+
 import { Close } from "@radix-ui/react-dialog";
 import { Edit3, Share, Trash } from "lucide-react";
+
+
 
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
-import { Button, buttonVariants } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import { CopyButton } from "@/components/ui/CopyButton";
 import {
   Dialog,
@@ -76,10 +80,8 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                   <Sheet>
                     <SheetTrigger asChild>
                       <Button
-                        className={buttonVariants({
-                          variant: "ghost",
-                          className: "bg-transparent text-primary",
-                        })}
+                        variant="ghost"
+                        className="bg-transparent text-primary"
                       >
                         <Edit3 className="h-4 w-4" />
                         <span className="sr-only">Edit</span>
@@ -90,15 +92,13 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                   {/* TODO: this needs refactoring */}
                   <Dialog>
                     <DialogTrigger>
-                      <div
-                        className={buttonVariants({
-                          variant: "ghost",
-                          className: "bg-transparent text-primary",
-                        })}
+                      <Button
+                        variant="ghost"
+                        className="bg-transparent text-primary"
                       >
                         <Share className="h-4 w-4" />
                         <span className="sr-only">Share</span>
-                      </div>
+                      </Button>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
@@ -133,7 +133,6 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                         !recipe.shareUrl && (
                           <div className="flex gap-4">
                             <Button
-                              className={buttonVariants({})}
                               disabled={shareMutation.isLoading}
                               onClick={() => {
                                 shareMutation.mutate({ name });
@@ -142,13 +141,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                               <span>Create Link</span>
                             </Button>
                             <Close>
-                              <div
-                                className={buttonVariants({
-                                  variant: "secondary",
-                                })}
-                              >
-                                Cancel
-                              </div>
+                              <Button variant="secondary">Cancel</Button>
                             </Close>
                           </div>
                         )}
@@ -171,9 +164,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                             />
                           </div>
                           <Button
-                            className={buttonVariants({
-                              variant: "destructive",
-                            })}
+                            variant="destructive"
                             disabled={stopShareMutation.isLoading}
                             onClick={() => {
                               stopShareMutation.mutate({ name });
@@ -194,15 +185,13 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                   </Dialog>
                   <Dialog>
                     <DialogTrigger>
-                      <div
-                        className={buttonVariants({
-                          variant: "ghost",
-                          className: "bg-transparent text-primary",
-                        })}
+                      <Button
+                        variant="ghost"
+                        className="bg-transparent text-primary"
                       >
                         <Trash className="h-4 w-4" />
                         <span className="sr-only">Delete</span>
-                      </div>
+                      </Button>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
@@ -216,9 +205,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                       </DialogHeader>
                       <div className="flex gap-4">
                         <Button
-                          className={buttonVariants({
-                            variant: "destructive",
-                          })}
+                          variant="destructive"
                           disabled={deleteMutation.isLoading}
                           onClick={() => {
                             deleteMutation.mutate({ name });
@@ -234,13 +221,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                           )}
                         </Button>
                         <Close>
-                          <div
-                            className={buttonVariants({
-                              variant: "secondary",
-                            })}
-                          >
-                            Cancel
-                          </div>
+                          <Button variant="secondary">Cancel</Button>
                         </Close>
                       </div>
                     </DialogContent>

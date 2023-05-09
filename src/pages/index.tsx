@@ -2,11 +2,16 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
+
+
 import { Soup } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
+
+
 import { Icons } from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/Button";
+
 
 const Header = () => {
   const { data: sessionData } = useSession();
@@ -22,36 +27,24 @@ const Header = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <div
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
-              >
+              <Button size="sm" variant="ghost">
                 <Icons.gitHub className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
-              </div>
+              </Button>
             </Link>
             <Link
               href={"https://twitter.com/LeoKling_"}
               target="_blank"
               rel="noreferrer"
             >
-              <div
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
-              >
+              <Button size="sm" variant="ghost">
                 <Icons.twitter className="h-5 w-5 fill-current" />
                 <span className="sr-only">Twitter</span>
-              </div>
+              </Button>
             </Link>
             <Button
-              className={buttonVariants({
-                size: "sm",
-                className: "px-4",
-              })}
+              size="sm"
+              className="px-4"
               onClick={
                 sessionData
                   ? () => void signOut()
@@ -96,14 +89,12 @@ const Home: NextPage = () => {
                 <h3>Head to Library</h3>
               </Link>
             ) : (
-              <button
-                className={buttonVariants({
-                  className: "font-medium px-8 h-11",
-                })}
+              <Button
+                className="font-medium px-8 h-11"
                 onClick={() => void signIn("discord")}
               >
                 <h3>Get Started</h3>
-              </button>
+              </Button>
             )}
             <a
               href="https://github.com/ecrax/tatsugiri"

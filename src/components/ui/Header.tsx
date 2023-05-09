@@ -2,6 +2,8 @@ import { type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+
+
 import { useAtom } from "jotai";
 import {
   Library,
@@ -28,7 +30,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
-import { buttonVariants } from "./Button";
+import { Button } from "./Button";
+
 
 const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
   children,
@@ -58,19 +61,14 @@ const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
           {/* <span>Welcome back</span> */}
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <div
-                className={buttonVariants({
-                  variant: "ghost",
-                  className: "relative",
-                })}
-              >
+              <Button variant="ghost" className="relative">
                 <ShoppingCartIcon className="my-2 h-6 w-6" />
                 {cart.length > 0 && (
                   <span className="absolute top-[11.25px] left-[21.5px] inline-flex items-center justify-center w-4 h-4 rounded-full text-[8px] font-bold leading-none text-white ">
                     {cart.reduce((acc, item) => acc + item.amount, 0)}
                   </span>
                 )}
-              </div>
+              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="sm:w-96 w-screen" align="end">
               <div className="flex justify-between">
@@ -241,12 +239,7 @@ const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <button
-              className={buttonVariants({})}
-              onClick={() => void signIn("github")}
-            >
-              Sign in
-            </button>
+            <Button onClick={() => void signIn("github")}>Sign in</Button>
           )}
         </div>
       </div>

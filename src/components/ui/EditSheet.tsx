@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 
+
+
 import { type Recipe } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
+
+
 import { api } from "@/utils/api";
-import { Button, buttonVariants } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import {
   SheetContent,
   SheetDescription,
@@ -180,11 +184,7 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
             </GroupInput>
           </div>
           <SheetFooter>
-            <Button
-              type="button"
-              className={buttonVariants({ variant: "outline" })}
-              onClick={() => reset()}
-            >
+            <Button type="button" variant="outline" onClick={() => reset()}>
               Reset
             </Button>
             <Button type="submit">Save changes</Button>
