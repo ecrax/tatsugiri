@@ -28,7 +28,7 @@ const Add: NextPage = () => {
             {allRecipes && (
               <CommandMenu
                 recipes={allRecipes}
-                className="sm:pr-12 md:w-40 lg:w-64"
+                className="sm:pr-12 md:w-40 lg:w-64 mr-2"
               />
             )}
           </Header>

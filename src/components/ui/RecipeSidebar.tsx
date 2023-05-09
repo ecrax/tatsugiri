@@ -61,12 +61,7 @@ const Content: React.FC<{
       </div>
 
       <div className="space-y-4 md:px-8">
-        {allRecipes && (
-          <CommandMenu
-            className="sm:pr-12 md:w-40 lg:w-64"
-            recipes={allRecipes}
-          />
-        )}
+        {allRecipes && <CommandMenu recipes={allRecipes} />}
         <h2 className="text-lg font-semibold">All Recipes</h2>
         {/* {!allRecipes && <p>Loading...</p>} */}
         {allRecipes && (
