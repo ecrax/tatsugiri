@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { DialogProps } from "@radix-ui/react-dialog";
 import { Library, Plus } from "lucide-react";
 import { useTheme } from "next-themes";
 

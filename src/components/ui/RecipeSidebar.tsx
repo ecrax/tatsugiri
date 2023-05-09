@@ -1,8 +1,12 @@
 import React from "react";
 import Link from "next/link";
 
+
+
 import { clsx } from "clsx";
 import { ClipboardList, MenuIcon, Soup, Timer } from "lucide-react";
+
+
 
 import { api } from "@/utils/api";
 import { Separator } from "@/components/ui/Seperator";
@@ -10,13 +14,16 @@ import { CommandMenu } from "./CommandMenu";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
 import { Sheet, SheetContent, SheetTrigger } from "./Sheet";
 
+const wait = () => new Promise((resolve) => setTimeout(resolve, 250));
+
 const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
   selectedRecipe,
 }) => {
+  const [open, setOpen] = React.useState(false);
   return (
     <aside className="absolute md:static">
       <div className="inline md:hidden">
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger className="py-8 pl-8 w-10 h-10">
             <MenuIcon className="w-6 h-6" />
           </SheetTrigger>
@@ -26,18 +33,26 @@ const RecipeSidebar: React.FC<{ selectedRecipe?: string }> = ({
             position="left"
             size="content"
           >
-            <Content selectedRecipe={selectedRecipe} />
+            <Content selectedRecipe={selectedRecipe} setOpen={setOpen} />
           </SheetContent>
         </Sheet>
       </div>
       <div className="hidden md:inline">
-        <Content selectedRecipe={selectedRecipe} />
+        <Content
+          selectedRecipe={selectedRecipe}
+          setOpen={() => {
+            return;
+          }}
+        />
       </div>
     </aside>
   );
 };
 
-const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
+const Content: React.FC<{
+  selectedRecipe?: string;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ selectedRecipe, setOpen }) => {
   const { data: allRecipes } = api.recipe.getRecipesForSidebar.useQuery();
 
   return (
@@ -72,11 +87,12 @@ const Content: React.FC<{ selectedRecipe?: string }> = ({ selectedRecipe }) => {
                       r.name === selectedRecipe && "bg-accent"
                     )}
                     href={`/recipe/${r.name ?? ""}`}
+                    onClick={() => void wait().then(() => setOpen(false))}
                   >
                     {r.name}
                   </Link>
                 </HoverCardTrigger>
-                <HoverCardContent side="right">
+                <HoverCardContent side="right" className="hidden md:block">
                   <div className="flex items-center justify-between ">
                     <div className="mr-4 flex w-full flex-col gap-3">
                       <p className="flex flex-col items-center text-xs">
