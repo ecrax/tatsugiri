@@ -2,25 +2,12 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import { Close } from "@radix-ui/react-dialog";
-import { Edit3, Share, Trash } from "lucide-react";
+
 
 import { api } from "@/utils/api";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
-import { Button, buttonVariants } from "@/components/ui/Button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/Dialog";
 import Header from "@/components/ui/Header";
-import RecipeSidebar from "@/components/ui/RecipeSidebar";
-import { Separator } from "@/components/ui/Seperator";
 
 const SharedRecipePage: NextPage = () => {
   const router = useRouter();

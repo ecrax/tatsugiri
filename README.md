@@ -11,9 +11,6 @@
 - display/handle form errors
 - invaidate queries on mutation
 
-- recipe sharing
-    - create new (shortened) url -> basically a url shortener
-
 - display time needed in recipes overview
 
 - pdf export
@@ -29,3 +26,5 @@
 - spacing between "b" and "c" cell is too large
     - "b" and "c" try to become as tall as the "a" cell
 - some images do not stretch to screen width on mobile
+- recipe sharing
+    - create new (shortened) url -> basically a url shortener

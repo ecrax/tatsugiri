@@ -14,9 +14,11 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
 import { Button, buttonVariants } from "@/components/ui/Button";
+import { CopyButton } from "@/components/ui/CopyButton";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/Dialog";
 import RecipeEditSheet from "@/components/ui/EditSheet";
 import Header from "@/components/ui/Header";
+import { Input } from "@/components/ui/Input";
 import RecipeSidebar from "@/components/ui/RecipeSidebar";
 import { Separator } from "@/components/ui/Seperator";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
@@ -90,8 +92,17 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                         <DialogTitle>Share this recipe?</DialogTitle>
                         <DialogDescription>
                           <div className="pb-4">
-                            By sharing this recipe everyone with a link to it
-                            will be able to view it.
+                            {recipe.shareUrl ? (
+                              <p>
+                                You have already shared this recipe in the past.
+                                Here is the link.
+                              </p>
+                            ) : (
+                              <p>
+                                By sharing this recipe everyone with a link to
+                                it will be able to view it.
+                              </p>
+                            )}
                           </div>
                           {shareMutation.isLoading &&
                             !shareMutation.data &&
@@ -130,16 +141,25 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                           {/* TODO: stop sharing button */}
                           {(shareMutation.data || recipe.shareUrl) && (
                             <div className="flex gap-4">
-                              <input
-                                className="w-full rounded-md border border-border px-2 py-1"
-                                type="text"
-                                value={`${window.location.origin}/r/${
-                                  shareMutation.data?.id ??
-                                  recipe.shareUrl ??
-                                  ""
-                                }`}
-                                readOnly
-                              />
+                              <div className="flex items-center rounded-md border border-input pr-3 w-full">
+                                <Input
+                                  className="border-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                                  type="text"
+                                  value={`${window.location.origin}/r/${
+                                    shareMutation.data?.id ??
+                                    recipe.shareUrl ??
+                                    ""
+                                  }`}
+                                  readOnly
+                                />
+                                <CopyButton
+                                  value={`${window.location.origin}/r/${
+                                    shareMutation.data?.id ??
+                                    recipe.shareUrl ??
+                                    ""
+                                  }`}
+                                />
+                              </div>
                               <Close>
                                 <div
                                   className={buttonVariants({
