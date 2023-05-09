@@ -14,6 +14,9 @@
     - send data as json
     - https://github.com/vercel-community/rust
 
+- categories
+- search by keywords as well as name
+
 - display/handle form errors
 - fix hover cards ("Unable to preventDefault inside passive event listener invocation.")
 - cdn for images
