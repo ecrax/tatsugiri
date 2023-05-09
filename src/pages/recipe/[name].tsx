@@ -28,8 +28,10 @@ const RecipePage: NextPage = () => {
   const router = useRouter();
   const { name } = router.query;
 
-  if (!name || Array.isArray(name)) {
+  if (Array.isArray(name)) {
     return <p>recipe name not valid</p>;
+  } else if (!name) {
+    return <></>;
   } else {
     return <RecipePageContent recipeName={name} />;
   }
@@ -150,36 +152,21 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                         )}
 
                       {(recipe.shareUrl || shareMutation.data) && (
-                        <div className="flex gap-4 flex-col">
-                          <div className="flex gap-4">
-                            <div className="flex items-center rounded-md border border-input pr-3 w-full">
-                              <Input
-                                className="border-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                                type="text"
-                                value={`${window.location.origin}/r/${
-                                  shareMutation.data?.id ??
-                                  recipe.shareUrl ??
-                                  ""
-                                }`}
-                                readOnly
-                              />
-                              <CopyButton
-                                value={`${window.location.origin}/r/${
-                                  shareMutation.data?.id ??
-                                  recipe.shareUrl ??
-                                  ""
-                                }`}
-                              />
-                            </div>
-                            <Close>
-                              <div
-                                className={buttonVariants({
-                                  variant: "secondary",
-                                })}
-                              >
-                                Close
-                              </div>
-                            </Close>
+                        <div className="flex gap-4">
+                          <div className="flex items-center rounded-md border border-input pr-3 w-full">
+                            <Input
+                              className="border-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                              type="text"
+                              value={`${window.location.origin}/r/${
+                                shareMutation.data?.id ?? recipe.shareUrl ?? ""
+                              }`}
+                              readOnly
+                            />
+                            <CopyButton
+                              value={`${window.location.origin}/r/${
+                                shareMutation.data?.id ?? recipe.shareUrl ?? ""
+                              }`}
+                            />
                           </div>
                           <Button
                             className={buttonVariants({
@@ -192,11 +179,11 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                           >
                             {stopShareMutation.isLoading ? (
                               <>
-                                <Icons.loadingSpinner className="stroke-primary" />
+                                <Icons.loadingSpinner className="stroke-border" />
                                 <span className="sr-only">Loading...</span>
                               </>
                             ) : (
-                              <span>Stop Sharing</span>
+                              <span>Disable</span>
                             )}
                           </Button>
                         </div>
