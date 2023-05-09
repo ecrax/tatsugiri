@@ -2,11 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-
-
 import { LayoutGrid, List, Plus } from "lucide-react";
-
-
 
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -16,7 +12,6 @@ import { CommandMenu } from "@/components/ui/CommandMenu";
 import Header from "@/components/ui/Header";
 import { Separator } from "@/components/ui/Seperator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-
 
 const Add: NextPage = () => {
   const { data: allRecipes, isLoading } =

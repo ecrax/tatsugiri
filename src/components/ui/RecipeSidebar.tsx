@@ -1,17 +1,12 @@
 import React from "react";
 import Link from "next/link";
 
-
-
 import { clsx } from "clsx";
-import { ClipboardList, MenuIcon, Soup, Timer } from "lucide-react";
-
-
+import { MenuIcon, Soup } from "lucide-react";
 
 import { api } from "@/utils/api";
 import { Separator } from "@/components/ui/Seperator";
 import { CommandMenu } from "./CommandMenu";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
 import { Sheet, SheetContent, SheetTrigger } from "./Sheet";
 
 const wait = () => new Promise((resolve) => setTimeout(resolve, 250));
@@ -79,40 +74,41 @@ const Content: React.FC<{
             {allRecipes.length == 0 && <p>Wow such empty</p>}
             {allRecipes.map((r) => (
               //? Better/more useful info on hover
-              <HoverCard key={r.name}>
-                <HoverCardTrigger asChild>
-                  <Link
-                    className={clsx(
-                      "group flex w-full items-center rounded-md py-2 px-2 text-sm font-medium hover:bg-accent transition-colors",
-                      r.name === selectedRecipe && "bg-accent"
-                    )}
-                    href={`/recipe/${r.name ?? ""}`}
-                    onClick={() => void wait().then(() => setOpen(false))}
-                  >
-                    {r.name}
-                  </Link>
-                </HoverCardTrigger>
-                <HoverCardContent side="right" className="hidden md:block">
-                  <div className="flex items-center justify-between ">
-                    <div className="mr-4 flex w-full flex-col gap-3">
-                      <p className="flex flex-col items-center text-xs">
-                        <Timer />
-                        {r.totalTime}
-                      </p>
-                      <Separator />
-                      <p className="flex flex-col items-center text-xs">
-                        <ClipboardList />
-                        {r.recipeInstructions.length}
-                      </p>
-                    </div>
-                    <img
-                      src={r.image ?? ""}
-                      alt={r.name ?? ""}
-                      className="h-32 w-32 rounded-md object-cover"
-                    />
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
+              // <HoverCard key={r.name}>
+              //   <HoverCardTrigger asChild>
+              <Link
+                key={r.name}
+                className={clsx(
+                  "group flex w-full items-center rounded-md py-2 px-2 text-sm font-medium hover:bg-accent transition-colors",
+                  r.name === selectedRecipe && "bg-accent"
+                )}
+                href={`/recipe/${r.name ?? ""}`}
+                onClick={() => void wait().then(() => setOpen(false))}
+              >
+                {r.name}
+              </Link>
+              //   </HoverCardTrigger>
+              //   <HoverCardContent side="right" className="hidden md:block">
+              //     <div className="flex items-center justify-between ">
+              //       <div className="mr-4 flex w-full flex-col gap-3">
+              //         <p className="flex flex-col items-center text-xs">
+              //           <Timer />
+              //           {r.totalTime}
+              //         </p>
+              //         <Separator />
+              //         <p className="flex flex-col items-center text-xs">
+              //           <ClipboardList />
+              //           {r.recipeInstructions.length}
+              //         </p>
+              //       </div>
+              //       <img
+              //         src={r.image ?? ""}
+              //         alt={r.name ?? ""}
+              //         className="h-32 w-32 rounded-md object-cover"
+              //       />
+              //     </div>
+              //   </HoverCardContent>
+              // </HoverCard>
             ))}
           </div>
         )}

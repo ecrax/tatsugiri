@@ -7,9 +7,7 @@
 - all recipes overview
     - display time needed in recipes overview
     - sorting, filtering, searching, etc.
-- close sidebar on mobile after navigating
 
-- https://ui.shadcn.com/docs/components/command instead of search bar
 - pdf export
     - rust api endpoint (vercel function)
     - typst templates
@@ -17,6 +15,7 @@
     - https://github.com/vercel-community/rust
 
 - display/handle form errors
+- fix hover cards ("Unable to preventDefault inside passive event listener invocation.")
 - cdn for images
 - proper landing page
 
@@ -27,3 +26,5 @@
 - invaidate queries on mutation
 - recipe sharing
     - create new (shortened) url -> basically a url shortener
+- https://ui.shadcn.com/docs/components/command instead of search bar
+- close sidebar on mobile after navigating
