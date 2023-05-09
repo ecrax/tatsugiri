@@ -83,6 +83,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                     </SheetTrigger>
                     <RecipeEditSheet recipe={recipe} />
                   </Sheet>
+                  {/* TODO: this needs refactoring */}
                   <Dialog>
                     <DialogTrigger>
                       <div
