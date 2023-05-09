@@ -36,7 +36,7 @@ const SharedRecipePageContent: React.FC<{ recipeId: string }> = ({
         <title>{recipe?.name ?? "Loading..."}</title>
       </Head>
       <main className="grid min-h-screen">
-        <div className="px-8 py-6 ">
+        <div className="px-8 py-6">
           <Header />
           {error && (
             <div className="flex h-full justify-center items-center text-lg">
@@ -44,7 +44,9 @@ const SharedRecipePageContent: React.FC<{ recipeId: string }> = ({
             </div>
           )}
           {recipe && !error ? (
-            <RecipeContent recipe={recipe} />
+            <div className="flex justify-center">
+                <RecipeContent recipe={recipe} />
+            </div>
           ) : (
             <div className="flex h-full justify-center items-center">
               <Icons.loadingSpinner className="stroke-primary w-6 h-6" />
