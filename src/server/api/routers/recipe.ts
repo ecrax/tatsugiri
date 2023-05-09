@@ -1,7 +1,12 @@
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 import { recipeSchema } from "@/server/zodSchemas";
 import { type Recipe } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import { nanoid } from "nanoid";
 import recipeDataScraper from "recipe-scraper";
 import { z } from "zod";
 
@@ -19,6 +24,46 @@ export const recipeRouter = createTRPCRouter({
           },
         },
       });
+    }),
+  getShared: publicProcedure
+    .input(z.object({ id: z.string().min(20) }))
+    .query(({ input, ctx }) => {
+      return ctx.prisma.recipe.findFirstOrThrow({
+        where: {
+          shareUrl: input.id,
+        },
+      });
+    }),
+  shareByName: protectedProcedure
+    .input(z.object({ name: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const recipe = await ctx.prisma.recipe.findFirstOrThrow({
+        where: {
+          name: input.name,
+          AND: {
+            owner: {
+              email: ctx.session.user.email,
+            },
+          },
+        },
+      });
+
+      if (recipe.shareUrl) {
+        return { id: recipe.shareUrl };
+      }
+
+      const id = nanoid(20);
+
+      await ctx.prisma.recipe.update({
+        data: {
+          shareUrl: id,
+        },
+        where: {
+          id: recipe.id,
+        },
+      });
+
+      return { id };
     }),
   getRecipesForSidebar: protectedProcedure.query(({ ctx }) => {
     // TODO: pagination/lazy loading

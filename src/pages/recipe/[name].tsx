@@ -14,19 +14,13 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
 import { Button, buttonVariants } from "@/components/ui/Button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/Dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/Dialog";
 import RecipeEditSheet from "@/components/ui/EditSheet";
 import Header from "@/components/ui/Header";
 import RecipeSidebar from "@/components/ui/RecipeSidebar";
 import { Separator } from "@/components/ui/Seperator";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
+
 
 const RecipePage: NextPage = () => {
   const router = useRouter();
@@ -43,17 +37,19 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
   recipeName: name,
 }) => {
   const router = useRouter();
-  const { data: recipe } = api.recipe.getByName.useQuery({ name });
+  const { data: recipe, isLoading: recipeLoading } =
+    api.recipe.getByName.useQuery({ name });
   const deleteMutation = api.recipe.delete.useMutation({
     onSuccess: () => {
       void router.push("/recipes");
     },
   });
+  const shareMutation = api.recipe.shareByName.useMutation();
 
   return (
     <ProtectedRoute>
       <Head>
-        <title>{name}</title>
+        <title>{recipeLoading ? "Loading..." : name}</title>
       </Head>
       <main className="grid min-h-screen grid-cols-1 md:grid-cols-4 2xl:grid-cols-6">
         <RecipeSidebar selectedRecipe={name} />
@@ -77,15 +73,88 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                     </SheetTrigger>
                     <RecipeEditSheet recipe={recipe} />
                   </Sheet>
-                  <Button
-                    className={buttonVariants({
-                      variant: "ghost",
-                      className: "bg-transparent text-primary",
-                    })}
-                  >
-                    <Share className="h-4 w-4" />
-                    <span className="sr-only">Share</span>
-                  </Button>
+                  <Dialog>
+                    <DialogTrigger>
+                      <div
+                        className={buttonVariants({
+                          variant: "ghost",
+                          className: "bg-transparent text-primary",
+                        })}
+                      >
+                        <Share className="h-4 w-4" />
+                        <span className="sr-only">Share</span>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Share this recipe?</DialogTitle>
+                        <DialogDescription>
+                          <div className="pb-4">
+                            By sharing this recipe everyone with a link to it
+                            will be able to view it.
+                          </div>
+                          {shareMutation.isLoading &&
+                            !shareMutation.data &&
+                            !recipe.shareUrl && (
+                              <div className="flex justify-center items-center">
+                                <Icons.loadingSpinner className="stroke-primary" />
+                                <span className="sr-only">Loading...</span>
+                              </div>
+                            )}
+
+                          {!shareMutation.isLoading &&
+                            !shareMutation.data &&
+                            !recipe.shareUrl && (
+                              <div className="flex gap-4">
+                                <Button
+                                  className={buttonVariants({})}
+                                  disabled={shareMutation.isLoading}
+                                  onClick={() => {
+                                    shareMutation.mutate({ name });
+                                  }}
+                                >
+                                  <span className="">Create Link</span>
+                                </Button>
+                                <Close>
+                                  <div
+                                    className={buttonVariants({
+                                      variant: "secondary",
+                                    })}
+                                  >
+                                    Cancel
+                                  </div>
+                                </Close>
+                              </div>
+                            )}
+
+                          {/* TODO: stop sharing button */}
+                          {(shareMutation.data || recipe.shareUrl) && (
+                            <div className="flex gap-4">
+                              <input
+                                className="w-full rounded-md border border-border px-2 py-1"
+                                type="text"
+                                value={`${window.location.origin}/r/${
+                                  shareMutation.data?.id ??
+                                  recipe.shareUrl ??
+                                  ""
+                                }`}
+                                readOnly
+                              />
+                              <Close>
+                                <div
+                                  className={buttonVariants({
+                                    variant: "secondary",
+                                  })}
+                                >
+                                  Close
+                                </div>
+                              </Close>
+                            </div>
+                          )}
+                        </DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
                   <Dialog>
                     <DialogTrigger>
                       <div
@@ -127,8 +196,9 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                             </Button>
                             <Close>
                               <div
-                                className={buttonVariants()}
-                                
+                                className={buttonVariants({
+                                  variant: "secondary",
+                                })}
                               >
                                 Cancel
                               </div>

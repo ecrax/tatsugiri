@@ -40,6 +40,7 @@ model Recipe {
     recipeTypes        String[]
     keywords           String[]
     userId             String
+    shareUrl           String?
 }
 
 // Necessary for Next auth
