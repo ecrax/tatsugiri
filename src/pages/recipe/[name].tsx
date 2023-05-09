@@ -2,12 +2,8 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-
-
 import { Close } from "@radix-ui/react-dialog";
 import { Edit3, Share, Trash } from "lucide-react";
-
-
 
 import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";

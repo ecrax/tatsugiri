@@ -2,8 +2,6 @@ import { type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-
-
 import { useAtom } from "jotai";
 import {
   Library,
@@ -31,7 +29,6 @@ import {
 } from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
 import { Button } from "./Button";
-
 
 const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
   children,

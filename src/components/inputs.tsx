@@ -1,7 +1,5 @@
 import React, { type ReactNode } from "react";
 
-
-
 import { Plus } from "lucide-react";
 import {
   useFieldArray,
@@ -14,7 +12,6 @@ import { Label } from "@/components/ui/Label";
 import { Textarea } from "@/components/ui/Textarea";
 import { type FormRecipe } from "./types";
 import { Button } from "./ui/Button";
-
 
 export const TextInput: React.FC<{
   register: UseFormRegister<FormRecipe>;
@@ -48,8 +45,6 @@ export const TextAreaInput: React.FC<{
     <Textarea id={id} className="col-span-3" {...register(id)} />
   </div>
 );
-
-
 
 export const GroupInput: React.FC<{
   register: UseFormRegister<FormRecipe>;

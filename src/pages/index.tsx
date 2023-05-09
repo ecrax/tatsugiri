@@ -2,16 +2,11 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-
-
 import { Soup } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-
-
 import { Icons } from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/Button";
-
 
 const Header = () => {
   const { data: sessionData } = useSession();
