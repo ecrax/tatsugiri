@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-
-
 import { type Recipe } from "@prisma/client";
 import { useAtom } from "jotai";
 import { LinkIcon, PlusCircleIcon } from "lucide-react";

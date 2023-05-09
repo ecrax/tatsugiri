@@ -1,13 +1,9 @@
 import { type ReactNode } from "react";
 import { useRouter } from "next/router";
 
-
-
 import { useSession } from "next-auth/react";
 
 import { Icons } from "./icons";
-
-
 
 const ProtectedRoute: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { data, status } = useSession();

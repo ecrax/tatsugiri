@@ -2,8 +2,6 @@ import { type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-
-
 import { useAtom } from "jotai";
 import {
   LogOut,
@@ -18,15 +16,19 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 
-
-
 import { cartAtom } from "@/lib/atoms";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/DropdownMenu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
 import { Icons } from "../icons";
 import { buttonVariants } from "./Button";
-
 
 const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
   children,
@@ -178,7 +180,7 @@ const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
                   <div className="flex items-center">
                     <User className="mr-2 h-4 w-4" /> Profile
                   </div>
-                  <span className="">⌘+L</span>
+                  <span>⌘+L</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => void router.push("/add")}
@@ -187,7 +189,7 @@ const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
                   <div className="flex items-center">
                     <Plus className="mr-2 h-4 w-4" /> Scrape
                   </div>
-                  <span className="">⌘+N</span>
+                  <span>⌘+N</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex items-center justify-between">
                   <div className="flex items-center">
@@ -210,14 +212,14 @@ const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
                     onClick={() => setTheme("light")}
                   >
                     <Icons.sun className="h-4 w-4 fill-slate-700 dark:fill-none" />
-                    <span className="">Light</span>
+                    <span>Light</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="flex flex-col items-center"
                     onClick={() => setTheme("dark")}
                   >
                     <Icons.moon className="h-4 w-4 dark:fill-slate-400 fill-none" />
-                    <span className="">Dark</span>
+                    <span>Dark</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className={`flex flex-col items-center`}

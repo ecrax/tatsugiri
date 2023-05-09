@@ -39,14 +39,22 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
   recipeName: name,
 }) => {
   const router = useRouter();
+  const utils = api.useContext();
   const { data: recipe, isLoading: recipeLoading } =
     api.recipe.getByName.useQuery({ name });
   const deleteMutation = api.recipe.delete.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await utils.recipe.getRecipesForSidebar.invalidate();
       void router.push("/recipes");
     },
   });
   const shareMutation = api.recipe.shareByName.useMutation();
+  const stopShareMutation = api.recipe.stopShareByName.useMutation({
+    onSuccess: async () => {
+      shareMutation.reset();
+      await utils.recipe.getByName.invalidate({ name: recipe?.name ?? "" });
+    },
+  });
 
   return (
     <ProtectedRoute>
@@ -91,88 +99,107 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                       <DialogHeader>
                         <DialogTitle>Share this recipe?</DialogTitle>
                         <DialogDescription>
-                          <div className="pb-4">
+                          <span className="pb-4">
                             {recipe.shareUrl ? (
-                              <p>
+                              <>
                                 You have already shared this recipe in the past.
                                 Here is the link.
-                              </p>
+                              </>
                             ) : (
-                              <p>
+                              <>
                                 By sharing this recipe everyone with a link to
                                 it will be able to view it.
-                              </p>
+                              </>
                             )}
-                          </div>
-                          {shareMutation.isLoading &&
-                            !shareMutation.data &&
-                            !recipe.shareUrl && (
-                              <div className="flex justify-center items-center">
-                                <Icons.loadingSpinner className="stroke-primary" />
-                                <span className="sr-only">Loading...</span>
-                              </div>
-                            )}
-
-                          {!shareMutation.isLoading &&
-                            !shareMutation.data &&
-                            !recipe.shareUrl && (
-                              <div className="flex gap-4">
-                                <Button
-                                  className={buttonVariants({})}
-                                  disabled={shareMutation.isLoading}
-                                  onClick={() => {
-                                    shareMutation.mutate({ name });
-                                  }}
-                                >
-                                  <span className="">Create Link</span>
-                                </Button>
-                                <Close>
-                                  <div
-                                    className={buttonVariants({
-                                      variant: "secondary",
-                                    })}
-                                  >
-                                    Cancel
-                                  </div>
-                                </Close>
-                              </div>
-                            )}
-
-                          {/* TODO: stop sharing button */}
-                          {(shareMutation.data || recipe.shareUrl) && (
-                            <div className="flex gap-4">
-                              <div className="flex items-center rounded-md border border-input pr-3 w-full">
-                                <Input
-                                  className="border-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                                  type="text"
-                                  value={`${window.location.origin}/r/${
-                                    shareMutation.data?.id ??
-                                    recipe.shareUrl ??
-                                    ""
-                                  }`}
-                                  readOnly
-                                />
-                                <CopyButton
-                                  value={`${window.location.origin}/r/${
-                                    shareMutation.data?.id ??
-                                    recipe.shareUrl ??
-                                    ""
-                                  }`}
-                                />
-                              </div>
-                              <Close>
-                                <div
-                                  className={buttonVariants({
-                                    variant: "secondary",
-                                  })}
-                                >
-                                  Close
-                                </div>
-                              </Close>
-                            </div>
-                          )}
+                          </span>
                         </DialogDescription>
                       </DialogHeader>
+                      {shareMutation.isLoading &&
+                        !shareMutation.data &&
+                        !recipe.shareUrl && (
+                          <div className="flex justify-center items-center">
+                            <Icons.loadingSpinner className="stroke-primary" />
+                            <span className="sr-only">Loading...</span>
+                          </div>
+                        )}
+
+                      {!shareMutation.isLoading &&
+                        !shareMutation.data &&
+                        !recipe.shareUrl && (
+                          <div className="flex gap-4">
+                            <Button
+                              className={buttonVariants({})}
+                              disabled={shareMutation.isLoading}
+                              onClick={() => {
+                                shareMutation.mutate({ name });
+                              }}
+                            >
+                              <span>Create Link</span>
+                            </Button>
+                            <Close>
+                              <div
+                                className={buttonVariants({
+                                  variant: "secondary",
+                                })}
+                              >
+                                Cancel
+                              </div>
+                            </Close>
+                          </div>
+                        )}
+
+                      {(recipe.shareUrl || shareMutation.data) && (
+                        <div className="flex gap-4 flex-col">
+                          <div className="flex gap-4">
+                            <div className="flex items-center rounded-md border border-input pr-3 w-full">
+                              <Input
+                                className="border-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                                type="text"
+                                value={`${window.location.origin}/r/${
+                                  shareMutation.data?.id ??
+                                  recipe.shareUrl ??
+                                  ""
+                                }`}
+                                readOnly
+                              />
+                              <CopyButton
+                                value={`${window.location.origin}/r/${
+                                  shareMutation.data?.id ??
+                                  recipe.shareUrl ??
+                                  ""
+                                }`}
+                              />
+                            </div>
+                            <Close>
+                              <div
+                                className={buttonVariants({
+                                  variant: "secondary",
+                                })}
+                              >
+                                Close
+                              </div>
+                            </Close>
+                          </div>
+                          <Button
+                            className={buttonVariants({
+                              variant: "destructive",
+                            })}
+                            disabled={stopShareMutation.isLoading}
+                            onClick={() => {
+                              stopShareMutation.mutate({ name });
+                            }}
+                          >
+                            {stopShareMutation.isLoading ? (
+                              <>
+                                <Icons.loadingSpinner className="stroke-primary" />
+                                <span className="sr-only">Loading...</span>
+                              </>
+                            ) : (
+                              <span>Stop Sharing</span>
+                            )}
+                          </Button>
+                        </div>
+                      )}
                     </DialogContent>
                   </Dialog>
                   <Dialog>
@@ -191,41 +218,41 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                       <DialogHeader>
                         <DialogTitle>Are you absolutely sure?</DialogTitle>
                         <DialogDescription>
-                          <div className="pb-4">
+                          <span className="pb-4">
                             This action cannot be undone. This will permanently
                             delete this recipe.
-                          </div>
-                          <div className="flex gap-4">
-                            <Button
-                              className={buttonVariants({
-                                variant: "destructive",
-                              })}
-                              disabled={deleteMutation.isLoading}
-                              onClick={() => {
-                                deleteMutation.mutate({ name });
-                              }}
-                            >
-                              {deleteMutation.isLoading ? (
-                                <>
-                                  <Icons.loadingSpinner className="stroke-primary" />
-                                  <span className="sr-only">Loading...</span>
-                                </>
-                              ) : (
-                                <span className="">Delete</span>
-                              )}
-                            </Button>
-                            <Close>
-                              <div
-                                className={buttonVariants({
-                                  variant: "secondary",
-                                })}
-                              >
-                                Cancel
-                              </div>
-                            </Close>
-                          </div>
+                          </span>
                         </DialogDescription>
                       </DialogHeader>
+                      <div className="flex gap-4">
+                        <Button
+                          className={buttonVariants({
+                            variant: "destructive",
+                          })}
+                          disabled={deleteMutation.isLoading}
+                          onClick={() => {
+                            deleteMutation.mutate({ name });
+                          }}
+                        >
+                          {deleteMutation.isLoading ? (
+                            <>
+                              <Icons.loadingSpinner className="stroke-primary" />
+                              <span className="sr-only">Loading...</span>
+                            </>
+                          ) : (
+                            <span>Delete</span>
+                          )}
+                        </Button>
+                        <Close>
+                          <div
+                            className={buttonVariants({
+                              variant: "secondary",
+                            })}
+                          >
+                            Cancel
+                          </div>
+                        </Close>
+                      </div>
                     </DialogContent>
                   </Dialog>
 

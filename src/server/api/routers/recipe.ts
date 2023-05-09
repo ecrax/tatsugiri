@@ -65,6 +65,29 @@ export const recipeRouter = createTRPCRouter({
 
       return { id };
     }),
+  stopShareByName: protectedProcedure
+    .input(z.object({ name: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const recipe = await ctx.prisma.recipe.findFirstOrThrow({
+        where: {
+          name: input.name,
+          AND: {
+            owner: {
+              email: ctx.session.user.email,
+            },
+          },
+        },
+      });
+
+      await ctx.prisma.recipe.update({
+        data: {
+          shareUrl: null,
+        },
+        where: {
+          id: recipe.id,
+        },
+      });
+    }),
   getRecipesForSidebar: protectedProcedure.query(({ ctx }) => {
     // TODO: pagination/lazy loading
     return ctx.prisma.recipe.findMany({

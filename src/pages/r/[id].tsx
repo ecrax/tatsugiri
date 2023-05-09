@@ -2,8 +2,6 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-
-
 import { api } from "@/utils/api";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
