@@ -16,7 +16,6 @@
 
 - categories
 - search by keywords as well as name
-- use https://github.com/fb55/entities to decode html entities
 
 - display/handle form errors
 - fix hover cards ("Unable to preventDefault inside passive event listener invocation.")
@@ -33,3 +32,4 @@
     - create new (shortened) url -> basically a url shortener
 - https://ui.shadcn.com/docs/components/command instead of search bar
 - close sidebar on mobile after navigating
+- use https://www.npmjs.com/package/html-entities to decode html entities

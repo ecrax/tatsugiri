@@ -1,11 +1,8 @@
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 import { recipeSchema } from "@/server/zodSchemas";
 import { type Recipe } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import { decode } from "html-entities";
 import { nanoid } from "nanoid";
 import recipeDataScraper from "recipe-scraper";
 import { z } from "zod";
@@ -122,14 +119,14 @@ export const recipeRouter = createTRPCRouter({
             prepTime: recipe.prepTime,
             totalTime: recipe.totalTime,
             url: recipe.url,
-            description: recipe.description,
+            description: decode(recipe.description),
             image: recipe.image,
             name: recipe.name,
             keywords: recipe.keywords,
             recipeCategories: recipe.recipeCategories,
             recipeCuisines: recipe.recipeCuisines,
             recipeIngredients: recipe.recipeIngredients,
-            recipeInstructions: recipe.recipeInstructions,
+            recipeInstructions: recipe.recipeInstructions.map((i) => decode(i)),
             recipeTypes: recipe.recipeTypes,
             recipeYield: recipe.recipeYield,
             owner: {
