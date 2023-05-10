@@ -9,7 +9,7 @@ import { api } from "@/utils/api";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Icons } from "@/components/icons";
 import RecipeContent from "@/components/recipe";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonVariants } from "@/components/ui/Button";
 import { CopyButton } from "@/components/ui/CopyButton";
 import {
   Dialog,
@@ -74,27 +74,31 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
               <div className="flex">
                 <div className="gap-2 flex pr-2">
                   <Sheet>
-                    <SheetTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className="bg-transparent text-primary"
+                    <SheetTrigger>
+                      <div
+                        className={buttonVariants({
+                          variant: "ghost",
+                          className: "bg-transparent text-primary",
+                        })}
                       >
                         <Edit3 className="h-4 w-4" />
                         <span className="sr-only">Edit</span>
-                      </Button>
+                      </div>
                     </SheetTrigger>
                     <RecipeEditSheet recipe={recipe} />
                   </Sheet>
                   {/* TODO: this needs refactoring */}
                   <Dialog>
                     <DialogTrigger>
-                      <Button
-                        variant="ghost"
-                        className="bg-transparent text-primary"
+                      <div
+                        className={buttonVariants({
+                          variant: "ghost",
+                          className: "bg-transparent text-primary",
+                        })}
                       >
                         <Share className="h-4 w-4" />
                         <span className="sr-only">Share</span>
-                      </Button>
+                      </div>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
@@ -181,13 +185,15 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                   </Dialog>
                   <Dialog>
                     <DialogTrigger>
-                      <Button
-                        variant="ghost"
-                        className="bg-transparent text-primary"
+                      <div
+                        className={buttonVariants({
+                          variant: "ghost",
+                          className: "bg-transparent text-primary",
+                        })}
                       >
                         <Trash className="h-4 w-4" />
                         <span className="sr-only">Delete</span>
-                      </Button>
+                      </div>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
