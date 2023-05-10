@@ -141,7 +141,13 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                               <span>Create Link</span>
                             </Button>
                             <Close>
-                              <Button variant="secondary">Cancel</Button>
+                              <div
+                                className={buttonVariants({
+                                  variant: "secondary",
+                                })}
+                              >
+                                Cancel
+                              </div>
                             </Close>
                           </div>
                         )}
@@ -223,7 +229,11 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
                           )}
                         </Button>
                         <Close>
-                          <Button variant="secondary">Cancel</Button>
+                          <div
+                            className={buttonVariants({ variant: "secondary" })}
+                          >
+                            Cancel
+                          </div>
                         </Close>
                       </div>
                     </DialogContent>
