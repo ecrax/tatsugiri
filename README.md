@@ -19,6 +19,7 @@
 
 - display/handle form errors
 - fix hover cards ("Unable to preventDefault inside passive event listener invocation.")
+- pagination?
 - cdn for images
 - proper landing page
 
