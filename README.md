@@ -16,6 +16,7 @@
 
 - categories
 - search by keywords as well as name
+- use https://github.com/fb55/entities to decode html entities
 
 - display/handle form errors
 - fix hover cards ("Unable to preventDefault inside passive event listener invocation.")
