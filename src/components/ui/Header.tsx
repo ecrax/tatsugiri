@@ -42,18 +42,18 @@ const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
   return (
     <header
       className={cn(
-        `flex items-center ${logo ? "justify-between" : "justify-end"}`
+        `gap-2 flex items-center ${logo ? "justify-between" : "justify-end"}`
       )}
     >
       {logo && (
         <Link href={"/recipes"}>
-          <h1 className="flex items-center text-2xl font-semibold -mt-2 -ml-[0.5px] ">
-            <Soup className="mr-2" /> Tatsugiri
+          <h1 className="flex items-center text-2xl font-semibold">
+            <Soup className="mr-2" /> <span className="hidden sm:block">Tatsugiri</span>
           </h1>
         </Link>
       )}
-      <div className="flex items-center justify-end">
-        <div>{children}</div>
+      <div className="w-full flex items-center justify-end">
+        <div className="w-full text-right">{children}</div>
         <div className="flex items-center gap-2">
           {/* <span>Welcome back</span> */}
           <DropdownMenu>

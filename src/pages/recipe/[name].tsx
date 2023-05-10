@@ -71,7 +71,7 @@ const RecipePageContent: React.FC<{ recipeName: string }> = ({
         <div className="col-span-3 col-start-1 md:col-start-2 border-l-none md:border-l md:border-l-border px-8 py-6 2xl:col-span-5">
           <Header>
             {recipe && (
-              <div className="flex">
+              <div className="flex flex-row-reverse">
                 <div className="gap-2 flex pr-2">
                   <Sheet>
                     <SheetTrigger>
