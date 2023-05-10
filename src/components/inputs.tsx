@@ -42,7 +42,7 @@ export const TextAreaInput: React.FC<{
     <Label htmlFor={id} className="text-left">
       {children}
     </Label>
-    <Textarea id={id} className="col-span-3" {...register(id)} />
+    <Textarea rows={4} id={id} className="col-span-3" {...register(id)} />
   </div>
 );
 

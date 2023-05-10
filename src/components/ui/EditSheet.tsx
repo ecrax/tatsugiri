@@ -83,7 +83,13 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     defaultValues: getDefaultRecipe(recipe),
   });
 
-  const updateMutation = api.recipe.update.useMutation();
+  const utils = api.useContext();
+  const updateMutation = api.recipe.update.useMutation({
+    onSuccess: async () => {
+      await utils.recipe.getByName.invalidate({ name: recipe?.name ?? "" });
+      await utils.recipe.getRecipesForSidebar.invalidate();
+    },
+  });
 
   const onSubmit = async (data: FormRecipe) => {
     await updateMutation.mutateAsync({
@@ -108,7 +114,7 @@ const RecipeEditSheet: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
       },
     });
 
-    console.log(data);
+    // console.log(data);
   };
 
   // This is stupid but it works

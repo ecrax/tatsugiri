@@ -48,7 +48,8 @@ const Header: React.FC<{ children?: ReactNode; logo?: boolean }> = ({
       {logo && (
         <Link href={"/recipes"}>
           <h1 className="flex items-center text-2xl font-semibold">
-            <Soup className="mr-2" /> <span className="hidden sm:block">Tatsugiri</span>
+            <Soup className="mr-2" />
+            <span className="hidden sm:block">Tatsugiri</span>
           </h1>
         </Link>
       )}
